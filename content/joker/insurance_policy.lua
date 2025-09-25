@@ -5,7 +5,7 @@ SMODS.Joker {
       a_mult = 10,
     }
   },
-  rarity = 1,
+  rarity = 2,
   pos = { x = 19, y = 7 },
   atlas = "jokers_atlas",
   cost = 6,
@@ -29,7 +29,7 @@ SMODS.Joker {
     return {
       vars = {
         card.ability.extra.a_mult,
-        card.ability.extra.a_mult * worker_tally
+        SMODS.signed(card.ability.extra.a_mult * worker_tally)
       }
     }
   end,

@@ -16,12 +16,13 @@ SMODS.current_mod.calculate = function(self, context)
     for _, v in ipairs(context.scoring_hand) do
       if not v.debuff and PB_UTIL.has_paperclip(v) then clips_played = clips_played + 1 end
     end
-    if clips_played > 0 then
+    local scale_amount = math.floor(clips_played / 2)
+    if scale_amount > 0 then
       for _, v in ipairs(G.playing_cards) do
         local clip = PB_UTIL.has_paperclip(v)
         if clip == "paperback_green_clip" and not v.debuff then
           local clip_table = v.ability.paperback_green_clip
-          clip_table.mult = clip_table.mult + (clip_table.mult_plus * clips_played)
+          clip_table.mult = clip_table.mult + (clip_table.mult_plus * scale_amount)
         end
       end
     end
@@ -860,7 +861,8 @@ if PB_UTIL.config.paperclips_enabled then
       G.shared_stickers[self.key].role.draw_major = card
       G.shared_stickers[self.key]:draw_shader('dissolve', nil, nil, nil, card.children.center, nil, nil, x_offset)
       if self.shiny then
-        G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center, nil, nil, x_offset)
+        G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center, nil,
+          nil, x_offset)
       end
     end,
 
@@ -956,6 +958,8 @@ if PB_UTIL.config.ego_gifts_enabled then
         set = 'paperback_ego_gift',
         area = G.pack_cards,
         skip_materialize = true,
+        -- used in args.source inside of in_pool
+        key_append = 'paperback_extr'
       }
     end,
 
@@ -1169,7 +1173,7 @@ if PB_UTIL.config.suits_enabled then
   }
 end
 
---- @alias Paperclip "blue" | "black" | "white" | "red" | "orange" | "pink" | "yellow" | "gold"
+--- @alias Paperclip "blue" | "black" | "white" | "red" | "orange" | "pink" | "yellow" | "gold" | "platinum"
 PB_UTIL.ENABLED_PAPERCLIPS = {
   "white_clip",
   "black_clip",
@@ -1181,5 +1185,9 @@ PB_UTIL.ENABLED_PAPERCLIPS = {
   "blue_clip",
   "purple_clip",
   "pink_clip",
+  "platinum_clip"
+}
+--- @alias Special_Paperclip  "platinum"
+PB_UTIL.SPECIAL_PAPERCLIPS = {
   "platinum_clip"
 }
