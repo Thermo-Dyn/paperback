@@ -6,20 +6,33 @@ SMODS.Challenge {
     }
   },
   jokers = {
-    { id = "j_paperback_photocopy", eternal = true }, { id = "j_paperback_master_plan", eternal = true }, { id = "j_brainstorm", eternal = true }, { id = "j_blueprint", eternal = true },
+    { id = "j_paperback_photocopy", eternal = true },
+    { id = "j_paperback_master_plan", eternal = true },
+    { id = "j_brainstorm", eternal = true },
+    { id = "j_blueprint", eternal = true },
 
   },
   restrictions = {
-    banned_cards = {
-      { id = 'j_paperback_shadowmantle' },
-      { id = 'j_paperback_book_of_vengeance' },
-      { id = 'j_invisible' },
-      { id = 'c_paperback_eight_of_wands' },
-      { id = 'c_paperback_nine_of_swords' },
-      { id = 'c_paperback_two_of_pentacles' },
-      { id = 'v_blank' },
-      { id = 'v_antimatter' }
-    },
+    banned_cards = function()
+      local original = {
+        { id = 'j_paperback_shadowmantle' },
+        { id = 'j_paperback_book_of_vengeance' },
+        { id = 'j_invisible' },
+        { id = 'c_paperback_eight_of_wands' },
+        { id = 'c_paperback_nine_of_swords' },
+        { id = 'c_paperback_two_of_pentacles' },
+        { id = 'v_blank' },
+        { id = 'v_antimatter' } }
+      local banned = {}
+
+      for i, v in ipairs(original) do
+        if SMODS.Centers[v.id] then
+          print(v.id)
+          table.insert(banned, v)
+        end
+      end
+      return banned
+    end,
     banned_other = {
       { id = 'tag_negative', type = 'tag' },
       { id = 'bl_final_leaf', type = 'blind' },
