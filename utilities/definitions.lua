@@ -880,7 +880,9 @@ PB_UTIL.ENABLED_DECKS = {
 }
 
 PB_UTIL.ENABLED_CHALLENGES = {
+  'hide_and_seek',
   'joker_of_the_day',
+  'white_nights_and_dark_days',
 }
 
 PB_UTIL.ENABLED_STICKERS = {

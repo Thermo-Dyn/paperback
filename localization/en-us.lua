@@ -3448,7 +3448,9 @@ return {
       paperback_corroded = "Corroded",
     },
     challenge_names = {
-      c_paperback_joker_of_the_day = "Joker of the Day"
+      c_paperback_joker_of_the_day = "Joker of the Day",
+      c_paperback_hide_and_seek = "Hide and Seek",
+      c_paperback_white_nights_and_dark_days = "White Nights and Dark Days",
     },
     v_text = {
       -- Challenge descriptions
