@@ -879,6 +879,10 @@ PB_UTIL.ENABLED_DECKS = {
   'shimmering',
 }
 
+PB_UTIL.ENABLED_CHALLENGES = {
+  'joker_of_the_day',
+}
+
 PB_UTIL.ENABLED_STICKERS = {
   'energized',
   'temporary',

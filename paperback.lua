@@ -28,10 +28,10 @@ if PB_UTIL.config.minor_arcana_enabled then
 
   -- Register the sprite for undiscovered Minor Arcana
   SMODS.UndiscoveredSprite {
-    key           = 'minor_arcana',
+    key = 'minor_arcana',
     prefix_config = { key = true },
-    atlas         = "minor_arcana_atlas",
-    pos           = { x = 0, y = 8 }
+    atlas = "minor_arcana_atlas",
+    pos = { x = 0, y = 8 }
   }
 
   -- Register Minor Arcana cards
@@ -71,11 +71,11 @@ if PB_UTIL.config.ego_gifts_enabled then
 
   -- Register the sprite for undiscovered E.G.O Gifts
   SMODS.UndiscoveredSprite {
-    key           = 'ego_gift',
+    key = 'ego_gift',
     prefix_config = { key = true },
-    atlas         = "ego_gift_atlas",
-    pos           = { x = 7, y = 1 },
-    no_overlay    = true,
+    atlas = "ego_gift_atlas",
+    pos = { x = 7, y = 1 },
+    no_overlay = true,
   }
 
   -- Register E.G.O Gift cards
@@ -141,6 +141,9 @@ end
 
 -- Load custom Decks
 PB_UTIL.register_items(PB_UTIL.ENABLED_DECKS, "content/deck")
+
+-- Load Challenges
+PB_UTIL.register_items(PB_UTIL.ENABLED_CHALLENGES, "content/challenge")
 
 -- Register DeckSkins for Friends of Paperback
 for _, data in ipairs(PB_UTIL.DECK_SKINS) do

@@ -3446,6 +3446,12 @@ return {
       paperback_energized = "Energized",
       paperback_temporary = "Temporary",
       paperback_corroded = "Corroded",
+    },
+    challenge_names = {
+      c_paperback_joker_of_the_day = "Joker of the Day"
+    },
+    v_text = {
+      -- Challenge descriptions
     }
   }
 }
