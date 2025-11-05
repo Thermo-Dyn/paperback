@@ -3449,11 +3449,14 @@ return {
     },
     challenge_names = {
       c_paperback_joker_of_the_day = "Joker of the Day",
-      c_paperback_hide_and_seek = "Hide and Seek",
       c_paperback_white_nights_and_dark_days = "White Nights and Dark Days",
+      c_paperback_hard_cover = "Hard Cover",
+      c_paperback_hide_and_seek = "Hide and Seek",
     },
     v_text = {
-      -- Challenge descriptions
+      ch_c_paperback_banned_vanilla_jokers = {
+        "All {C:attention}base{} Jokers are banned"
+      }
     }
   }
 }
