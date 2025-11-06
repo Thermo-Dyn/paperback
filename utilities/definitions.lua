@@ -881,8 +881,9 @@ PB_UTIL.ENABLED_DECKS = {
 
 PB_UTIL.ENABLED_CHALLENGES = {
   'hide_and_seek',
-  'hard_cover',
   'white_nights_and_dark_days',
+  'suburbia_overture',
+  'hard_cover',
   'joker_of_the_day',
 }
 
