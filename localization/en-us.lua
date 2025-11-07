@@ -3460,7 +3460,8 @@ return {
       c_paperback_white_nights_and_dark_days = "White Nights and Dark Days",
       c_paperback_hard_cover = "Hard Cover",
       c_paperback_hide_and_seek = "Hide and Seek",
-      c_paperback_suburbia_overture = "Suburbia Overture"
+      c_paperback_suburbia_overture = "Suburbia Overture",
+      c_paperback_foodie = "Foodie"
     },
     v_text = {
       ch_c_paperback_banned_vanilla_jokers = {
@@ -3468,6 +3469,9 @@ return {
       },
       ch_c_paperback_banned_non_common_jokers = {
         "All {C:attention}non-Common{} Jokers are banned"
+      },
+      ch_c_paperback_only_food_jokers = {
+        "All {C:attention}non-Food{} Jokers are banned"
       }
     }
   }

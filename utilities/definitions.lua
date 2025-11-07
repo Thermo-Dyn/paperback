@@ -894,6 +894,7 @@ PB_UTIL.ENABLED_CHALLENGES = {
   'suburbia_overture',
   'hard_cover',
   'joker_of_the_day',
+  'foodie'
 }
 
 PB_UTIL.ENABLED_STICKERS = {
