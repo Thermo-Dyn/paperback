@@ -893,8 +893,9 @@ PB_UTIL.ENABLED_CHALLENGES = {
   'white_nights_and_dark_days',
   'suburbia_overture',
   'hard_cover',
+  'borderline',
   'joker_of_the_day',
-  'foodie'
+  'foodie',
 }
 
 PB_UTIL.ENABLED_STICKERS = {
