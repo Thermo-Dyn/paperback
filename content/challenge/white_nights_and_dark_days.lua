@@ -25,6 +25,7 @@ SMODS.Challenge {
         '3',
         '2'
       }
-    }
+    },
+    type = 'Challenge Deck'
   }
 }
