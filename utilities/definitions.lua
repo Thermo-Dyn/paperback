@@ -894,6 +894,7 @@ PB_UTIL.ENABLED_CHALLENGES = {
   'suburbia_overture',
   'hard_cover',
   'borderline',
+  'all_smiles',
   'joker_of_the_day',
   'foodie',
 }

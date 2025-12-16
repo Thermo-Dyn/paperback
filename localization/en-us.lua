@@ -3460,6 +3460,7 @@ return {
       c_paperback_white_nights_and_dark_days = "White Nights and Dark Days",
       c_paperback_hard_cover = "Hard Cover",
       c_paperback_borderline = "Borderline",
+      c_paperback_all_smiles = "All Smiles",
       c_paperback_hide_and_seek = "Hide and Seek",
       c_paperback_suburbia_overture = "Suburbia Overture",
       c_paperback_foodie = "Foodie"
@@ -3476,6 +3477,9 @@ return {
       },
       ch_c_paperback_2x_blind_size = {
         "{C:red}X2{} base Blind size"
+      },
+      ch_c_paperback_non_faces_banned_ante = {
+        "All {C:attention}non-face cards{} are {C:red}debuffed{} after Ante 4"
       },
     }
   }
