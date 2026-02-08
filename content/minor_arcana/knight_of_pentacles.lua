@@ -2,6 +2,9 @@ PB_UTIL.MinorArcana {
   key = 'knight_of_pentacles',
   atlas = 'minor_arcana_atlas',
   pos = { x = 4, y = 7 },
+  paperback_credit = {
+    coder = { 'metanite' }
+  },
 
   can_use = function(self, card)
     return true
@@ -17,5 +20,6 @@ PB_UTIL.MinorArcana {
 
   use = function(self, card, area)
     G.GAME.current_round.reroll_cost = G.GAME.round_resets.reroll_cost
+    G.GAME.current_round.reroll_cost_increase = 0
   end
 }

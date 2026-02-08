@@ -3,8 +3,8 @@ if PB_UTIL.config.minor_arcana_enabled then
     key = 'triple_moon_goddess',
     config = {
       extra = {
-        tarot_odds = 3,
-        minor_arcana_odds = 6
+        tarot_odds = 2,
+        minor_arcana_odds = 4
       }
     },
     rarity = 2,
@@ -16,6 +16,10 @@ if PB_UTIL.config.minor_arcana_enabled then
     blueprint_compat = true,
     eternal_compat = true,
     perishable_compat = true,
+
+    paperback_credit = {
+      coder = { 'srockw' }
+    },
 
     loc_vars = function(self, info_queue, card)
       local n1, d1 = PB_UTIL.chance_vars(card, nil, nil, card.ability.extra.tarot_odds)
@@ -85,6 +89,10 @@ else
     eternal_compat = true,
     perishable_compat = true,
     soul_pos = nil,
+
+    paperback_credit = {
+      coder = { 'srockw' }
+    },
 
     loc_vars = function(self, info_queue, card)
       local n1, d1 = PB_UTIL.chance_vars(card, nil, nil, card.ability.extra.planet_odds)

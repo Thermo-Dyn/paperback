@@ -115,6 +115,11 @@ SMODS.current_mod.config_tab = function()
                 ref_table = PB_UTIL.config,
                 ref_value = 'plague_doctor_quotes_enabled'
               },
+              create_toggle {
+                label = localize('paperback_ui_show_credits'),
+                ref_table = PB_UTIL.config,
+                ref_value = 'show_credits',
+              }
             }
           }
         }
@@ -641,4 +646,202 @@ function PB_UTIL.create_select_card_ui(card, area)
       parent = card
     }
   }
+end
+
+--- Creates a 3x3 representation of the filtered base poker hands
+---@param filter fun(hand: table): boolean
+function PB_UTIL.create_base_remaining_hands_ui(filter)
+  local hand_columns = {
+    [1] = {},
+    [2] = {},
+    [3] = {}
+  }
+
+  for i, hand in ipairs(PB_UTIL.base_poker_hands) do
+    if filter(G.GAME.hands[hand]) then
+      table.insert(hand_columns[((i - 1) % 3) + 1], {
+        n = G.UIT.R,
+        config = { align = 'cm', padding = 0.1, emboss = 0.04, r = 0.02, colour = G.C.UI.BACKGROUND_DARK },
+        nodes = {
+          {
+            n = G.UIT.T,
+            config = {
+              text = localize(hand, 'poker_hands'),
+              scale = 0.3,
+              colour = G.C.UI.TEXT_LIGHT,
+            }
+          }
+        }
+      })
+    end
+  end
+
+  return {
+    {
+      n = G.UIT.C,
+      config = { align = 'cm', padding = 0.05 },
+      nodes = {
+        {
+          n = G.UIT.R,
+          config = { align = 'cm' },
+          nodes = {
+            {
+              n = G.UIT.T,
+              config = {
+                text = localize('paperback_ui_remaining_hands'),
+                scale = 0.4,
+                colour = G.C.CHIPS
+              }
+            }
+          }
+        },
+        {
+          n = G.UIT.R,
+          config = { align = 'cm' },
+          nodes = {
+            #hand_columns[1] > 0 and {
+              n = G.UIT.C,
+              config = { align = 'cm', padding = 0.1 },
+              nodes = hand_columns[1]
+            } or nil,
+            #hand_columns[2] > 0 and {
+              n = G.UIT.C,
+              config = { align = 'cm', padding = 0.1 },
+              nodes = hand_columns[2]
+            } or nil,
+            #hand_columns[3] > 0 and {
+              n = G.UIT.C,
+              config = { align = 'cm', padding = 0.1 },
+              nodes = hand_columns[3]
+            } or nil
+          }
+        }
+      }
+    }
+  }
+end
+
+-- Extra button
+SMODS.DrawStep {
+  key = 'extra_button',
+  prefix_config = { key = true },
+  order = -29,
+  func = function(card, layer)
+    if card.children.paperback_extra_button then
+      card.children.paperback_extra_button:draw()
+    end
+  end
+}
+
+SMODS.draw_ignore_keys.paperback_extra_button = true
+
+local highlight_ref = Card.highlight
+function Card.highlight(self, is_higlighted)
+  if self.config.center.paperback and self.config.center.paperback.extra_button then
+    local should_show = is_higlighted
+
+    if self.config.center.paperback.extra_button.should_show then
+      should_show = should_show and self.config.center.paperback.extra_button:should_show(self)
+    end
+
+    if should_show then
+      self.children.paperback_extra_button = self.config.center:paperback_create_extra_button(self)
+    elseif self.children.paperback_extra_button then
+      self.children.paperback_extra_button:remove()
+      self.children.paperback_extra_button = nil
+    end
+  end
+
+  return highlight_ref(self, is_higlighted)
+end
+
+---@param center { key: string }|table
+---@param button_data table
+function PB_UTIL.setup_extra_button(center, button_data)
+  local click_func = center.key .. "_click"
+  local can_use_func = center.key .. "_can_use"
+  local colour = button_data.colour or G.C.PAPERBACK_MAIN_COLOR
+  local text = {}
+
+  G.FUNCS[click_func] = function(e)
+    local c = e.config.ref_table
+    if c and button_data.click and type(button_data.click) == "function" then
+      button_data:click(c)
+    end
+    text.string = localize(button_data.text)
+  end
+
+  G.FUNCS[can_use_func] = function(e)
+    local c = e.config.ref_table
+    local can_use = true
+    if c and button_data.can_use and type(button_data.can_use) == "function" then
+      can_use = button_data:can_use(c)
+    end
+
+    e.config.button = can_use and click_func or nil
+    e.config.colour = can_use and colour or G.C.UI.BACKGROUND_INACTIVE
+  end
+
+  center.paperback_create_extra_button = function(self, card)
+    text.string = localize(button_data.text)
+
+    return UIBox {
+      definition = {
+        n = G.UIT.ROOT,
+        config = {
+          colour = G.C.CLEAR
+        },
+        nodes = {
+          {
+            n = G.UIT.C,
+            config = {
+              align = 'cm',
+              padding = 0.15,
+              r = 0.08,
+              hover = true,
+              shadow = true,
+              colour = colour,
+              button = click_func,
+              func = can_use_func,
+              ref_table = card,
+            },
+            nodes = {
+              {
+                n = G.UIT.R,
+                nodes = {
+                  {
+                    n = G.UIT.O,
+                    config = {
+                      object = DynaText {
+                        string = { {
+                          ref_table = text,
+                          ref_value = 'string'
+                        } },
+                        scale = 0.4,
+                        shadow = true,
+                        colours = { button_data.text_colour or G.C.UI.TEXT_LIGHT }
+                      }
+                    }
+                  },
+                  {
+                    n = G.UIT.B,
+                    config = {
+                      w = 0.1,
+                      h = 0.4
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      config = {
+        align = 'cl',
+        major = card,
+        parent = card,
+        offset = { x = 0.2, y = 0 }
+      }
+    }
+  end
 end

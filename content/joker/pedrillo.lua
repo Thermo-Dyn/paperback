@@ -11,11 +11,15 @@ SMODS.Joker {
   soul_pos = { x = 13, y = 3 },
   atlas = "jokers_atlas",
   cost = 20,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = true,
   perishable_compat = true,
+  paperback_credit = {
+    coder = { 'dowfrin' },
+    artist = { 'nevernamed' }
+  },
 
   calculate = function(self, card, context)
     if context.individual and context.cardarea == G.play then

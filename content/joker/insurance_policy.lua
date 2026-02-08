@@ -2,7 +2,7 @@ SMODS.Joker {
   key = 'insurance_policy',
   config = {
     extra = {
-      a_mult = 8,
+      a_mult = 5,
     }
   },
   rarity = 2,
@@ -14,6 +14,10 @@ SMODS.Joker {
   blueprint_compat = true,
   eternal_compat = true,
   perishable_compat = true,
+
+  paperback_credit = {
+    coder = { 'dowfrin' },
+  },
 
 
   loc_vars = function(self, info_queue, card)

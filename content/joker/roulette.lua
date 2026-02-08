@@ -11,10 +11,32 @@ SMODS.Joker {
   pos = { x = 11, y = 10 },
   atlas = "jokers_atlas",
   cost = 7,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = true,
+
+  paperback_credit = {
+    coder = { 'ejwu' }
+  },
+
+  check_for_unlock = function(self, args)
+    if args.type == 'hand_contents' then
+      local eval = evaluate_poker_hand(args.cards)
+      local has_spectrum_five = false
+      for hand, contents in pairs(eval) do
+        if string.find(hand, 'Spectrum Five') then
+          if next(eval[hand]) then
+            has_spectrum_five = true
+          end
+        end
+      end
+      if has_spectrum_five then
+        return true
+      end
+    end
+    return false
+  end,
 
   loc_vars = function(self, info_queue, card)
     return {

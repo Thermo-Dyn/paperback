@@ -17,12 +17,16 @@ SMODS.Joker {
   perishable_compat = false,
   soul_pos = nil,
 
+  paperback_credit = {
+    coder = { 'oppositewolf' }
+  },
+
   loc_vars = function(self, info_queue, card)
     return {
       vars = {
         card.ability.extra.mult_mod,
         card.ability.extra.sv_gain,
-        card.ability.extra.mult_mod * card.sell_cost
+        card.ability.extra.mult_mod * (card.sell_cost or 0)
       }
     }
   end,

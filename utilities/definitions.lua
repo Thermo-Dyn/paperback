@@ -19,12 +19,14 @@ SMODS.current_mod.calculate = function(self, context)
     for _, v in ipairs(context.scoring_hand) do
       if not v.debuff and PB_UTIL.has_paperclip(v) then clips_played = clips_played + 1 end
     end
+
+    local clips_played_plus_odd = PB_UTIL.count_paperclips { area = context.scoring_hand }
     if clips_played > 0 then
       for _, v in ipairs(G.playing_cards) do
         local clip = PB_UTIL.has_paperclip(v)
         if clip == "paperback_green_clip" and not v.debuff then
           local clip_table = v.ability.paperback_green_clip
-          local clips_played_plus_odd = clip_table.odd + clips_played
+          clips_played_plus_odd = clips_played_plus_odd + clip_table.odd + clips_played
           -- Every 2 clips go into mult,
           -- remaining odd clip goes to `odd`
           clip_table.mult = clip_table.mult + clip_table.mult_plus * math.floor(clips_played_plus_odd / 2)
@@ -43,55 +45,6 @@ SMODS.current_mod.calculate = function(self, context)
           local clip_table = v.ability.paperback_green_clip
           clip_table.mult = math.max(0, clip_table.mult - clip_table.mult_minus)
         end
-      end
-    end
-  end
-
-  -- purple clip: retrigger card if it has a clip and is adjacent to a purple clip
-  if context.repetition then
-    local area_cards
-    if context.cardarea == 'unscored' then
-      area_cards = {}
-      local scoring_hand_i = 1
-      -- Run through `full_hand`. Take cards if they aren't in `scoring_hand`
-      -- We only need to check scoring_hand[scoring_hand_i] at each point
-      for _, c in ipairs(context.full_hand) do
-        if context.scoring_hand[scoring_hand_i] == c then
-          scoring_hand_i = scoring_hand_i + 1
-        else
-          table.insert(area_cards, c)
-        end
-      end
-    elseif context.cardarea == G.play then
-      area_cards = context.scoring_hand
-    else
-      area_cards = context.cardarea.cards
-    end
-
-    local index
-    for k, v in ipairs(area_cards) do
-      if v == context.other_card then
-        index = k
-        break
-      end
-    end
-
-    if index then
-      local left = area_cards[index - 1]
-      local right = area_cards[index + 1]
-      local reps = 0
-      if left and PB_UTIL.has_paperclip(left) == "paperback_purple_clip" then
-        reps = reps + 1
-      end
-      if right and PB_UTIL.has_paperclip(right) == "paperback_purple_clip" then
-        reps = reps + 1
-      end
-      if PB_UTIL.has_paperclip(context.other_card) and reps > 0 then
-        return {
-          repetitions = reps,
-          message_card = context.other_card,
-          colour = G.C.PURPLE
-        }
       end
     end
   end
@@ -133,6 +86,7 @@ end
 -- Update values that get reset at the start of each round
 SMODS.current_mod.reset_game_globals = function(run_start)
   G.GAME.paperback.round.scored_clips = 0
+  G.GAME.paperback.highest_rank_this_round = nil
   G.GAME.paperback.weather_radio_hand = PB_UTIL.get_random_visible_hand('weather_radio')
   G.GAME.paperback.joke_master_hand = PB_UTIL.get_random_visible_hand('joke_master')
   -- Shopkeep
@@ -179,14 +133,17 @@ PB_UTIL.credits = {
       'PaperMoon',
       '「S_C_R_U_B_Y」',
       'Firch',
-      'Fennex'
+      'Fennex',
+      "MaveBoy",
+      'Dylan Hall',
+      "Ari"
     }
   },
   developers = {
     color = G.C.GREEN,
     entries = {
-      'OppositeWolf770, srockw, Nether, B, ejwu2, metanite64, TheSnaz',
-      'InfinityPlus05, aliahmed2k03'
+      'OppositeWolf770, srockw, Nether, B, ejwu2, metanite64, Dowfrin',
+      'InfinityPlus05, aliahmed2k03, ThermoDyn'
     }
   },
   localization = {
@@ -340,7 +297,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "nachos",
   "crispy_taco",
   "soft_taco",
-  -- "watermelon",
+  "watermelon",
   "complete_breakfast",
   "ghost_cola",
   "b_soda",
@@ -350,6 +307,8 @@ PB_UTIL.ENABLED_JOKERS = {
   "ice_cube",
   "cream_liqueur",
   "deviled_egg",
+  "chocolate_coins",
+  "golden_apple",
   "champagne",
   "coffee",
   "matcha",
@@ -364,6 +323,10 @@ PB_UTIL.ENABLED_JOKERS = {
   "pointy_stick",
   "charred_marshmallow",
   "sticky_stick",
+  'aperol',
+  'grenadine',
+  'blue_curacao',
+  'stout',
   "pear",
   "teapot",
   "sake_cup",
@@ -377,28 +340,31 @@ PB_UTIL.ENABLED_JOKERS = {
   "plague_doctor",
   "white_night",
   "angel_investor",
-  -- "der_freischutz",
+  "der_freischutz",
   "card_sleeve",
-  -- "plastic_wrap",
+  "plastic_wrap",
   "shopping_center",
   "everything_must_go",
   "tutor",
   "percussion_ensemble",
   "its_tv_time",
+  "trust_us",
   "eyelander",
-  -- "torii",
-  -- "freight",
+  "cast_iron",
+  "torii",
+  "freight",
   "high_speed_rail",
   "small_scale_onshore_wind",
   "satellite_array",
-  -- "first_contact",
+  "first_contact",
   "aurora_borealis",
   "grand_strategy",
   "moving_out",
   "ready_to_fly",
   "great_wave",
+  'one_shift_more',
   "let_it_happen",
-  -- "paralyzed"
+  "paralyzed",
   "in_case_i_make_it",
   "rosary_beads",
   "joker_cd_i",
@@ -416,14 +382,16 @@ PB_UTIL.ENABLED_JOKERS = {
   "ncj",
   "bicycle",
   -- "mezzetino",
-  -- "gauze",
+  "gauze",
   "joke_master",
-  -- "jokers_11",
-  -- "book_of_life",
-  -- "hamsa",
-  -- "hamsa_r",
-  -- "nazar",
-  -- "prescript",
+  "jokers_11",
+  "book_of_life",
+  "hamsa",
+  "hamsa_r",
+  "nazar",
+  "oujia_board",
+  "planchette",
+  "prescript",
   "trans_flag",
   "pride_flag",
   "bismuth",
@@ -434,13 +402,18 @@ PB_UTIL.ENABLED_JOKERS = {
   "autumn_leaves",
   "river",
   "evergreens",
+  "56_leaf_clover",
   "master_plan",
   "the_wonder_of_you",
   "tian_tian",
   "backpack",
   "roulette",
+  "57_leaf_clover",
   "mexican_train",
+  "coin_collection",
   "chocolate_joker",
+  "tropic_birds",
+  "attacking_vertical",
   "resurrections",
   "summoning_circle",
   "the_sun",
@@ -449,32 +422,39 @@ PB_UTIL.ENABLED_JOKERS = {
   "moribund",
   "subterfuge",
   "the_world",
-  -- "red_sun",
+  "red_sun_in_the_sky",
+  "jacks",
   "the_sun_rises",
   "blood_rain",
   -- "war_without_reason",
   "paranoia",
   "der_fluschutze",
   "touch_tone_joker",
-  -- "the_batter",
-  -- "off_switch",
-  -- "alpha",
-  -- "omega",
-  -- "epsilon",
+  "the_batter",
+  "off_switch",
+  "off_alpha",
+  "off_omega",
+  "off_epsilon",
   "jestrica",
   "you_are_a_fool",
   "alert",
   "legacy",
   -- "redscreen",
   "telamon",
+  "emf_reader",
+  -- "squall_line",
   "weather_radio",
   "power_surge",
   "time_regression_mix",
   "find_jimbo",
   "joker_crossing",
+  "jester",
   -- "tower_of_balatro",
   "jimbos_inferno",
   "tome",
+  "journal",
+  "park_postcard",
+  "keycard",
   "greeting_card",
   -- "an_invitation",
   "jimbocards",
@@ -488,21 +468,26 @@ PB_UTIL.ENABLED_JOKERS = {
   "inner_peace",
   "jimbos_joyous_joker_jamboree",
   "banana_man",
+  "mind_electric",
   "the_normal_joker",
+  -- "ampersand",
+  "shuttle",
+  "silent_assassin",
   "insurance_policy",
   "disco",
   "unionized_labor",
   "better_call_jimbo",
   "jimbo_adventure",
   "ddakji",
-  -- "yacht_dice",
-  -- "deck_of_cards",
+  "yacht_dice",
+  "deck_of_cards",
   "pocket_pair",
   "ultra_rare",
   -- "lore_digger",
   "the_quiet",
   "big_misser",
-  --"squall_line",
+  -- "sinister_minds",
+  "stereoscopic_specs",
   "fodder",
   "the_strongest",
   "da_capo",
@@ -511,9 +496,11 @@ PB_UTIL.ENABLED_JOKERS = {
   "quartz",
   "rock_candy",
   "rockin_stick",
+  "nigori",
   "birches",
   "black_star",
   "shooting_star",
+  "stella_octangula",
   "blue_star",
   "shadowmantle",
   "zealous_joker",
@@ -521,21 +508,28 @@ PB_UTIL.ENABLED_JOKERS = {
   "the_dynasty",
   "j_and_js",
   "master_spark",
+  "yacht",
   "prism",
   "fraudulent_joker",
   "pyrite",
   "tanghulu",
   "sweet_stick",
+  "lager",
   "wheat_field",
   "solar_eclipse",
   "gambit",
   "king_me",
+  "loaded_dice",
+  -- "regicide",
+  -- "bergentrucking"
+  "towering_pillar_of_hats",
   "manilla_folder",
-  -- "joker_duty",
+  "joker_duty",
   "clippy",
+  "chip_clip",
   "clothespin",
   "kintsugi_joker",
-  -- "happy_accident",
+  "happy_accident",
   "watercolor_joker",
   "medic",
   "festive_joker",
@@ -652,10 +646,10 @@ PB_UTIL.ENABLED_BLINDS = {
   "sharp",
   "natural",
   "coda",
-  -- "hold",
-  -- "glissando",
+  "hold",
+  "glissando",
   -- "denim_da_capo",
-  -- "misty_bass",
+  "misty_bass",
   "taupe_treble"
   -- "black_silence",
   -- "pearlescent_orchestra",
@@ -806,6 +800,48 @@ PB_UTIL.DECK_SKINS = {
       'Spades'
     }
   },
+  {
+    id = 'guides',
+    name = "Limbus Company",
+    suits = {
+      'paperback_Stars'
+    }
+  },
+  {
+    id = 'enforcers',
+    name = "Limbus Company",
+    suits = {
+      'paperback_Crowns'
+    }
+  },
+  {
+    id = 'wrath',
+    name = "Limbus Company",
+    suits = {
+      'Hearts'
+    }
+  },
+  {
+    id = 'gloom',
+    name = "Limbus Company",
+    suits = {
+      'Clubs'
+    }
+  },
+  {
+    id = 'sloth',
+    name = "Limbus Company",
+    suits = {
+      'Diamonds'
+    }
+  },
+  {
+    id = 'envy',
+    name = "Limbus Company",
+    suits = {
+      'Spades'
+    }
+  },
 }
 
 PB_UTIL.ENABLED_MINOR_ARCANA_BOOSTERS = {
@@ -911,6 +947,9 @@ if PB_UTIL.config.minor_arcana_enabled then
     group_key = 'paperback_minor_arcana_pack',
     kind = 'paperback_minor_arcana',
     draw_hand = true,
+    paperback_credit = {
+      composer = { 'larantula' },
+    },
 
     loc_vars = function(self, info_queue, card)
       local orig = SMODS.Booster.loc_vars(self, info_queue, card)
@@ -972,6 +1011,8 @@ if PB_UTIL.config.minor_arcana_enabled then
     set = 'paperback_minor_arcana',
     unlocked = true,
     discovered = false,
+    paperback_credit = {
+    },
 
     loc_vars = function(self, info_queue, card)
       if not self.config then return end
@@ -1153,6 +1194,14 @@ if PB_UTIL.config.ego_gifts_enabled then
     cost = 0,
     -- This card is always selected, not used. It goes to the 'consumeables' area
     select_card = "consumeables",
+    paperback_credit = {
+      artist = { 'papermoonqueen', 'ari' },
+      coder = { 'dowfrin' }
+    },
+
+    in_pool = function(self, args)
+      return not PB_UTIL.create_card_in_consumable_area
+    end,
 
     loc_vars = function(self, info_queue, card)
       info_queue[#info_queue + 1] = PB_UTIL.sin_tooltip(card.ability.sin)
@@ -1284,4 +1333,11 @@ PB_UTIL.ENABLED_PAPERCLIPS = {
 --- @alias Special_Paperclip  "platinum"
 PB_UTIL.SPECIAL_PAPERCLIPS = {
   "platinum_clip"
+}
+
+PB_UTIL.ENABLED_CHALLENGES = {
+  "trial_of_cups",
+  "trial_of_wands",
+  "trial_of_swords",
+  "trial_of_pentacles"
 }

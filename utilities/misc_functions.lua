@@ -1,3 +1,13 @@
+-- Literally just an implementation of table.find since this version of lua doesn't have one by default
+function PB_UTIL.find(table, value)
+  for i, v in ipairs(table) do
+    if v == value then
+      return i
+    end
+  end
+  return nil
+end
+
 -- Initialize Food pool if not existing, which may be created by other mods.
 -- Any joker can add itself to this pool by adding a pools table to its definition
 -- Credits to Cryptid for the idea
@@ -60,14 +70,18 @@ end
 --- @return integer
 function PB_UTIL.count_paperclips(args)
   local clips = 0
-
-  for _, v in ipairs(args.area and args.area.cards or {}) do
+  if not args.area then return 0 end
+  for _, v in ipairs(args.area.cards or args.area) do
     local debuff_check = args.allow_debuff or not v.debuff
     local highlighted_check = not args.exclude_highlighted or not v.highlighted
 
     if PB_UTIL.has_paperclip(v) and debuff_check and highlighted_check then
       clips = clips + 1
     end
+  end
+
+  for i, v in ipairs(SMODS.find_card('j_paperback_clothespin', args.allow_debuff)) do
+    clips = clips + 1
   end
 
   return clips
@@ -231,7 +245,7 @@ end
 function PB_UTIL.set_sell_value(card, amount)
   if not card.set_cost then return end
   card.ability.paperback_forced_base_sell_cost = amount
-  card.ability.extra_value = nil
+  card.ability.extra_value = 0
   card:set_cost()
 end
 
@@ -1332,4 +1346,58 @@ function PB_UTIL.banned_challenge_centers(list)
 
     return banned
   end
+end
+
+--- Logic for the Suit Drink Jokers
+--- @param check (boolean) whether to only check for the suit presence
+--- @param card (Card)
+--- @param context (CalcContext)
+function PB_UTIL.suit_drink_logic(card, context, check)
+  local has_suit = false
+  -- Check if played hand contains the required suit
+  for _, v in ipairs(context.scoring_hand) do
+    if v:is_suit(card.ability.extra.suit) then
+      has_suit = true
+      card.ability.extra.risk = false
+      break
+    end
+  end
+
+  if check then
+    return not has_suit
+  end
+
+  if not has_suit then
+    -- If the function is only checking for the suit presence, return here
+
+    -- Check if card is already at risk of being consumed, otherwise put it at risk
+    if not card.ability.extra.risk then
+      card.ability.extra.risk = true
+      juice_card_until(
+        card,
+        function() return card.ability.extra.risk and not G.RESET_JIGGLES end,
+        true
+      )
+      return {
+        message = localize('paperback_tipsy_ex'),
+        colour = G.C.SUITS[card.ability.extra.suit],
+        card = card
+      }
+    else
+      PB_UTIL.destroy_joker(card)
+      return {
+        message = localize('paperback_consumed_ex'),
+        colour = G.C.SUITS[card.ability.extra.suit],
+        card = card
+      }
+    end
+  end
+end
+
+--- Count the number of entries in a table not in a sequence
+--- @param table (table)
+function PB_UTIL.count_entries(table)
+  local count = 0
+  for _ in pairs(table) do count = count + 1 end
+  return count
 end

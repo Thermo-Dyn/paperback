@@ -22,15 +22,25 @@ function Game.init_game_object(self)
     bandaged_inc = 0,
     stained_inc = 0,
     destroyed_dark_suits = 0,
+    destroyed_cards = 0,
+    destroyed_cards_this_round = 0,
     last_tarot_energized = false,
     ranks_scored_this_ante = {},
     last_scored_suit = 'Spades',
+    hand_contained_crown = false,
     domino_ranks = {},
     jjjj_count = 0,
+    first_contact_count = 0,
     banned_run_keys = {},
     secret_hands = secrets,
     arcana_used = {},
     sold_ego_gifts = {},
+    finished_antes = {},
+    find_jimbo_unlock = false,
+    max_consumeables = 0,
+    let_it_happen_unlock_check = false,
+    jester_destroying_cards = false,
+    coin_collection_adding_money = false,
 
     weather_radio_hand = 'High Card',
     joke_master_hand = 'High Card',
@@ -45,6 +55,20 @@ function Game.init_game_object(self)
     second_trumpets = 0,
     second_trumpet_change = 0,
   }
+
+  return ret
+end
+
+-- set tarot_rate to 0 if in the minor arcana trials
+local start_run_ref = Game.start_run
+Game.start_run = function(self, args)
+  local ret = start_run_ref(self, args)
+  if self.GAME.modifiers.cup_trial
+  or self.GAME.modifiers.wand_trial
+  or self.GAME.modifiers.sword_trial
+  or self.GAME.modifiers.pentacle_trial then
+    self.GAME.tarot_rate = 0
+  end
   return ret
 end
 
@@ -161,7 +185,6 @@ function Card.remove(self)
       })
     end
   end
-
   return remove_ref(self)
 end
 
@@ -175,6 +198,21 @@ G.FUNCS.cash_out = function(e)
   })
 
   cash_out_ref(e)
+end
+
+-- Adds a new context for checking the maximum amount of consumables you had during a run
+local card_area_emplace_ref = CardArea.emplace
+function CardArea:emplace(card, location, stay_flipped)
+  local ret = card_area_emplace_ref(self, card, location, stay_flipped)
+  if self == G.consumeables then
+    local consumeable_tally = 0
+    for i = 1, #G.consumeables.cards do
+      consumeable_tally = consumeable_tally + 1
+    end
+    if consumeable_tally > G.GAME.paperback.max_consumeables then G.GAME.paperback.max_consumeables = consumeable_tally end
+    check_for_unlock({ type = 'modify_consumeable' })
+  end
+  return ret
 end
 
 -- Adds a new context for leveling up a hand
@@ -224,7 +262,7 @@ end
 local calculate_main_scoring_ref = SMODS.calculate_main_scoring
 function SMODS.calculate_main_scoring(context, scoring_hand)
   calculate_main_scoring_ref(context, scoring_hand)
-  if context.cardarea == G.play then
+  if context.cardarea == G.play or context.cardarea == 'unscored' then
     SMODS.calculate_context {
       paperback = {
         nichola = true -- Name can be changed later
@@ -391,4 +429,27 @@ function Blind.debuff_card(self, card, from_blind)
   end
 
   return ret
+end
+
+-- Keep track of which antes we have been in
+-- Used by Torii to know whether we should allow rewinding current ante
+local ease_ante_ref = ease_ante
+function ease_ante(mod)
+  G.GAME.paperback.finished_antes[G.GAME.round_resets.ante] = true
+  return ease_ante_ref(mod)
+end
+
+-- Evaluate context when XChips is scored (for Nigori scaling)
+-- Could be expanded on to contain other scoring effects but this is all that's necessary currently
+local calculate_individual_effect_ref = SMODS.calculate_individual_effect
+function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+  local xchips_keys = { 'x_chips', 'xchips', 'Xchip_mod', }
+  if PB_UTIL.find(xchips_keys, key) and amount ~= 0 then
+    SMODS.calculate_context({
+      paperback = {
+        xchips_scored = true,
+      }
+    })
+  end
+  return calculate_individual_effect_ref(effect, scored_card, key, amount, from_edition)
 end

@@ -9,12 +9,15 @@ SMODS.Joker {
   pos = { x = 3, y = 8 },
   atlas = 'jokers_atlas',
   cost = 4,
-  unlocked = true,
-  discovered = false,
+  unlocked = false,
   blueprint_compat = true,
   eternal_compat = false,
   pools = {
     Food = true
+  },
+
+  paperback_credit = {
+    coder = { 'ejwu' },
   },
 
   loc_vars = function(self, info_queue, card)
@@ -45,5 +48,17 @@ SMODS.Joker {
         colour = G.C.BLUE
       }
     end
+  end,
+
+  check_for_unlock = function(self, args)
+    if args.type == 'modify_jokers' and #PB_UTIL.get_owned_food() >= 5 then
+      return true
+    end
+  end,
+
+  locked_loc_vars = function(self, info_queue, card)
+    return {
+      vars = { 5 }
+    }
   end
 }

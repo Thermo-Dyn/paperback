@@ -10,25 +10,60 @@ SMODS.Joker {
   pos = { x = 7, y = 0 },
   atlas = "jokers_atlas",
   cost = 8,
-  unlocked = true,
+  unlocked = false,
   discovered = false,
   blueprint_compat = true,
   eternal_compat = true,
-  soul_pos = nil,
+  paperback = {
+    extra_button = {
+      text = 'paperback_ui_info',
+      colour = G.C.PAPERBACK_MAIN_COLOR,
+      click = function(self, card)
+        card.paperback_show_hands = not card.paperback_show_hands
+        self.text = card.paperback_show_hands and 'paperback_ui_info_expanded' or 'paperback_ui_info'
+      end,
+      should_show = function(self, card)
+        return card.area == G.jokers
+      end
+    }
+  },
+
+  paperback_credit = {
+    coder = { 'oppositewolf' }
+  },
 
   loc_vars = function(self, info_queue, card)
     local x_mult = card.ability.extra.x_mult_mod * G.GAME.paperback.solar_system_ct
+
     return {
       vars = {
         card.ability.extra.x_mult_mod,
         x_mult
-      }
+      },
+      main_end = card.paperback_show_hands and PB_UTIL.create_base_remaining_hands_ui(function(hand)
+        return hand.level <= G.GAME.paperback.solar_system_ct
+      end)
+    }
+  end,
+
+  check_for_unlock = function(self, args)
+    local planets_used = 0
+    for k, v in pairs(G.GAME.consumeable_usage) do
+      if v.set == 'Planet' then planets_used = planets_used + 1 end
+    end
+    return planets_used >= 9
+  end,
+
+  locked_loc_vars = function(self, info_queue, card)
+    return {
+      vars = { 9 }
     }
   end,
 
   calculate = function(self, card, context)
     -- If a hand is being leveled up, recalculate the xMult bonus
-    if context.paperback and context.paperback.level_up_hand then
+    -- The last two contexts are failsafes in case a hand is leveled up in an unorthodox way which paperback.level_up_hand doesn't catch
+    if not context.blueprint and ((context.paperback and context.paperback.level_up_hand) or context.before or context.ending_shop) then
       PB_UTIL.update_solar_system(card)
       if card.ability.extra.message_flag then
         card.ability.extra.message_flag = nil
