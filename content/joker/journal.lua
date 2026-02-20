@@ -2,7 +2,8 @@ SMODS.Joker {
   key = "journal",
   config = {
     extra = {
-      prev_chips = 0
+      chips = 0,
+      next_chips = 0,
     }
   },
   paperback_credit = {
@@ -19,19 +20,23 @@ SMODS.Joker {
   loc_vars = function(self, info_queue, card)
     return {
       vars = {
-        card.ability.extra.prev_chips
+        card.ability.extra.chips
       }
     }
   end,
 
   calculate = function(self, card, context)
     if context.joker_main then
+      local chips = card.ability.extra.chips
+      card.ability.extra.chips = card.ability.extra.next_chips
+
       return {
-        chips = card.ability.extra.prev_chips
+        chips = chips
       }
     end
-    if context.final_scoring_step then
-      card.ability.extra.prev_chips = hand_chips - card.ability.extra.prev_chips
+
+    if context.paperback and context.paperback.before_joker_effects then
+      card.ability.extra.next_chips = hand_chips
     end
   end
 }
