@@ -1,19 +1,26 @@
 [manifest]
-version = ""
+version = "1.0.0"
+priority = -2
 
 # end_round()
 # Prevent logic for advancing to next Blind
 # if G.GAME.paperback.vacation_juice_trigger is true.
 
-## This patch allows someone else to insert some text after
-## G.FUNCS.draw_from_hand_to_discard and the patch will still be ok
 [[patches]]
-[patches.regex]
+[patches.pattern]
 target = "functions/state_events.lua"
-pattern = '''
-[\t ]*G\.FUNCS\.draw_from_hand_to_discard\(\)(.*\n){0,50}.*G\.GAME\.blind:get_type\(\) == 'Boss'()'''
-position = "after"
-payload = ''' and not G.GAME.paperback.vacation_juice_trigger'''
+pattern = "G.GAME.voucher_restock = nil"
+position = "before"
+match_indent = true
+payload = "if not G.GAME.paperback.vacation_juice_trigger then"
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "G.FUNCS.draw_from_discard_to_deck()"
+position = "before"
+match_indent = true
+payload = "end"
 
 [[patches]]
 [patches.pattern]
@@ -23,15 +30,15 @@ G.GAME.round_resets.blind_states.Small = 'Defeated'
 '''
 position = "before"
 match_indent = true
-payload = '''if not G.GAME.paperback.vacation_juice_trigger then'''
+payload = "if not G.GAME.paperback.vacation_juice_trigger then"
+
 
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
 pattern = '''
-		v.ability.played_this_ante = nil
-	end
-end'''
-position = "after"
+if G.GAME.round_resets.temp_handsize then G.hand:change_size(-G.GAME.round_resets.temp_handsize); G.GAME.round_resets.temp_handsize = nil end
+'''
+position = "before"
 match_indent = true
-payload = '''end'''
+payload = "end"
