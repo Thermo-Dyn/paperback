@@ -32,7 +32,6 @@ position = "before"
 match_indent = true
 payload = "if not G.GAME.paperback.vacation_juice_trigger then"
 
-
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"

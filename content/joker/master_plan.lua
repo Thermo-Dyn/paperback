@@ -8,6 +8,8 @@ SMODS.Joker {
   eternal_compat = true,
   perishable_compat = true,
   unlocked = false,
+  -- allows this card to be unlocked when G.GAME.challenge is set
+  paperback_challenge_unlock = true,
 
   paperback_credit = {
     coder = { 'infinityplus' },
@@ -15,18 +17,19 @@ SMODS.Joker {
 
   check_for_unlock = function(self, args)
     if args.type == 'win_challenge' and G.GAME.challenge == 'c_city_1' then
-      self.challenge_bypass = true
       return true
     end
   end,
+
   loc_vars = function(self, info_queue, card)
     if card.area and card.area == G.jokers then
-      local other_joker
+      local other_joker = nil
       for i = 1, #G.jokers.cards do
         if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
       end
+
       local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
-      main_end = {
+      local main_end = {
         {
           n = G.UIT.C,
           config = { align = "bm", minh = 0.4 },
@@ -41,6 +44,7 @@ SMODS.Joker {
           }
         }
       }
+
       return { main_end = main_end }
     end
   end,
@@ -50,6 +54,7 @@ SMODS.Joker {
     for i = 1, #G.jokers.cards do
       if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
     end
+
     return SMODS.blueprint_effect(card, other_joker, context)
-  end,
+  end
 }
