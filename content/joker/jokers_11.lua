@@ -1,7 +1,7 @@
 SMODS.Joker {
   key = "jokers_11",
   config = {
-    extra ={
+    extra = {
       rank = "Ace"
     }
   },
@@ -21,7 +21,7 @@ SMODS.Joker {
   },
 
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.rank}}
+    return { vars = { card.ability.extra.rank } }
   end,
 
   locked_loc_vars = function(self, info_queue, card)
@@ -44,7 +44,7 @@ SMODS.Joker {
   end,
 
   calculate = function(self, card, context)
-    if context.end_of_round and context.individual and context.cardarea == G.hand then
+    if context.end_of_round and context.individual and context.cardarea == G.hand and context.beat_boss then
       if PB_UTIL.is_rank(context.other_card, card.ability.extra.rank) then
         return {
           message = localize('paperback_plus_tag'),
