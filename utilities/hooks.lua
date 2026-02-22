@@ -38,7 +38,6 @@ function Game.init_game_object(self)
     finished_antes = {},
     find_jimbo_unlock = false,
     max_consumeables = 0,
-    let_it_happen_unlock_check = false,
     jester_destroying_cards = false,
     coin_collection_adding_money = false,
 
