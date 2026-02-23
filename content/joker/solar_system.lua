@@ -57,7 +57,7 @@ SMODS.Joker {
 
   locked_loc_vars = function(self, info_queue, card)
     return {
-      vars = { 9 }
+      vars = { 9, localize('k_planet') }
     }
   end,
 

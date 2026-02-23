@@ -1875,7 +1875,7 @@ return {
           "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)",
         },
         unlock = {
-          "Use {C:attention,E:1}#1#{} different {C:attention,E:1}#3#{}",
+          "Use {C:attention,E:1}#1#{} different {C:planet}#2#{}",
           "cards in a run"
         }
       },
