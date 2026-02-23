@@ -4223,9 +4223,8 @@ return {
       paperback_and_spacer = ' and ',
 
       -- Developers
-
       paperback_dev_dowfrin = 'Dowfrin',
-      paperback_dev_srockw = 'srockw',
+      paperback_dev_srockw = 'Srock',
       paperback_dev_papermoonqueen = 'PaperMoonQueen',
       paperback_dev_dylan_hall = 'Dylan Hall',
       paperback_dev_metanite = 'metanite64',
