@@ -24,6 +24,7 @@ SMODS.Joker {
     return args.type == 'round_win' and G.GAME.current_round.hands_played == 1 and
         G.GAME.blind.boss and G.GAME.blind.name == 'Cerulean Bell'
   end,
+
   loc_vars = function(self, info_queue, card)
     local ranks_played = ""
 
