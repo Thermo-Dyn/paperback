@@ -15,18 +15,13 @@ SMODS.current_mod.optional_features = {
 SMODS.current_mod.calculate = function(self, context)
   -- green clip: gain mult for every other played and scored clip
   if context.before then
-    local clips_played = 0
-    for _, v in ipairs(context.scoring_hand) do
-      if not v.debuff and PB_UTIL.has_paperclip(v) then clips_played = clips_played + 1 end
-    end
-
-    local clips_played_plus_odd = PB_UTIL.count_paperclips { area = context.scoring_hand }
+    local clips_played = PB_UTIL.count_paperclips { area = context.scoring_hand }
     if clips_played > 0 then
       for _, v in ipairs(G.playing_cards) do
         local clip = PB_UTIL.has_paperclip(v)
         if clip == "paperback_green_clip" and not v.debuff then
           local clip_table = v.ability.paperback_green_clip
-          clips_played_plus_odd = clips_played_plus_odd + clip_table.odd + clips_played
+          clips_played_plus_odd = clip_table.odd + clips_played
           -- Every 2 clips go into mult,
           -- remaining odd clip goes to `odd`
           clip_table.mult = clip_table.mult + clip_table.mult_plus * math.floor(clips_played_plus_odd / 2)
