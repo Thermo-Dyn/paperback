@@ -118,11 +118,12 @@ function Card.draw(self, layer)
   return ret
 end
 
--- Count scored Clips each round
+-- multiple things to do here
 local eval_card_ref = eval_card
 function eval_card(card, context)
   local ret, ret2 = eval_card_ref(card, context)
 
+  -- Count scored Clips each round
   if context.cardarea == G.play and context.main_scoring and ret and ret.playing_card then
     if PB_UTIL.has_paperclip(card) then
       G.GAME.paperback.round.scored_clips = G.GAME.paperback.round.scored_clips + 1
@@ -141,6 +142,15 @@ function eval_card(card, context)
           })
         end
       end
+    end
+  end
+
+  -- trigger chips (or mult) from Soaked Cards scoring
+  if context.paperback and context.paperback.soaked and not(context.repetition_only or card.area ~= G.hand) then
+    if next(SMODS.find_card("j_paperback_blood_rain")) then
+      ret.playing_card = { mult = card.base.nominal }
+    else
+      ret.playing_card = { chips = card:get_chip_bonus() }
     end
   end
 
