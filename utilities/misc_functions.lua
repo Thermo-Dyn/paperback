@@ -1350,50 +1350,52 @@ function PB_UTIL.banned_challenge_centers(list)
   end
 end
 
---- Logic for the Suit Drink Jokers
---- @param check (boolean) whether to only check for the suit presence
+--- Calculate function for the Suit Drink Jokers
+--- @param self (SMODS.Center)
 --- @param card (Card)
 --- @param context (CalcContext)
-function PB_UTIL.suit_drink_logic(card, context, check)
-  local has_suit = false
-  -- Check if played hand contains the required suit
-  for _, v in ipairs(context.scoring_hand) do
-    if v:is_suit(card.ability.extra.suit) then
-      has_suit = true
-      card.ability.extra.risk = false
-      break
+function PB_UTIL.suit_drink_calculate(self, card, context)
+  if context.blueprint then return end
+
+  if context.individual and context.cardarea == G.play then
+    if context.other_card:is_suit(card.ability.extra.suit) then
+      if card.ability.extra.remaining > 0 then
+        card.ability.extra.remaining = card.ability.extra.remaining - 1
+
+        context.other_card.ability[card.ability.extra.upgrade] =
+            (context.other_card.ability[card.ability.extra.upgrade] or 1) + card.ability.extra.amount
+
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.SUITS[card.ability.extra.suit],
+        }
+      end
     end
-  end
 
-  if check then
-    return not has_suit
-  end
-
-  if not has_suit then
-    -- If the function is only checking for the suit presence, return here
-
-    -- Check if card is already at risk of being consumed, otherwise put it at risk
-    if not card.ability.extra.risk then
-      card.ability.extra.risk = true
-      juice_card_until(
-        card,
-        function() return card.ability.extra.risk and not G.RESET_JIGGLES end,
-        true
-      )
-      return {
-        message = localize('paperback_tipsy_ex'),
-        colour = G.C.SUITS[card.ability.extra.suit],
-        card = card
-      }
-    else
+    if card.ability.extra.remaining == 0 and not card.ability.extra.consumed then
       PB_UTIL.destroy_joker(card)
+      card.ability.extra.consumed = true
       return {
         message = localize('paperback_consumed_ex'),
-        colour = G.C.SUITS[card.ability.extra.suit],
-        card = card
+        colour = G.C.RED
       }
     end
   end
+end
+
+--- Loc Vars function for the Suit Drink Jokers
+--- @param self (SMODS.Center)
+--- @param card (Card)
+--- @param context (CalcContext)
+function PB_UTIL.suit_drink_loc_vars(self, info_queue, card)
+  return {
+    vars = {
+      card.ability.extra.remaining,
+      localize(card.ability.extra.suit, 'suits_plural'),
+      card.ability.extra.amount,
+      colours = { G.C.SUITS[card.ability.extra.suit] }
+    },
+  }
 end
 
 --- Count the number of entries in a table not in a sequence

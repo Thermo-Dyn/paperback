@@ -1924,49 +1924,43 @@ return {
       j_paperback_grenadine = {
         name = "Grenadine",
         text = {
-          "Scored {C:hearts}#1#{} cards give {X:mult,C:white}X#2#{} Mult when scored",
-          "Increases by {X:mult,C:white}X#3#{} when a {C:green}probability{} fails",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{X:mult,C:white}X#3#{} Mult when scored",
         },
       },
       j_paperback_stout = {
         name = "Stout",
         text = {
-          "Scored {C:spades}#1#{} cards give {X:chips,C:white}X#2#{} chips when scored",
-          "Increases by {X:chips,C:white}X#3#{} when {C:attention}#4#{} or more",
-          "played {C:spades}#1#{} are scoring",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:chips}+ X#3#{} Chips when scored",
         },
       },
       j_paperback_aperol = {
         name = "Aperol",
         text = {
-          "Scored {C:diamonds}#3#{} cards give {C:mult}+#1#{} Mult",
-          "for every {C:money}$#2#{} owned when scored",
-          "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:money}$#3#{} when scored",
         },
       },
       j_paperback_blue_curacao = {
         name = "Blue Curaçao",
         text = {
-          "Scored {C:clubs}#1#{} cards give {X:mult,C:white}X#2#{} Mult when scored",
-          "Increases by {X:mult,C:white}X#3#{} when {C:attention}#4#{} or more",
-          "played {C:clubs}#1#{} are scoring",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:mult}+#3#{} when scored",
         },
       },
       j_paperback_nigori = {
         name = "Nigori",
         text = {
-          "Scored {C:paperback_stars}#1#{} cards give",
-          "{C:chips}+#2#{} Chips when scored",
-          "Increases by {C:chips}+#3#{} whenever",
-          "{X:chips,C:white}XChips{} is scored",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{X:chips,C:white}X#3#{} chips when scored",
         },
       },
       j_paperback_lager = {
         name = "Lager",
         text = {
-          "{C:attention}+#1#{} Consumable slots",
-          "Increases by {C:attention}+#2#{} if scoring hand",
-          "contains at least {C:attention}#3#{} {C:paperback_crowns}#4#{}",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:green}+#3#{} odds when scored",
         },
       },
       j_paperback_paranoia = {
@@ -3852,15 +3846,15 @@ return {
           "to be used immediately"
         }
       },
-      -- Informational
-      paperback_suit_drink = {
-        name = "Suit Drink",
-        text = {
-          "This Joker {C:red}self-destructs{} after",
-          "playing no {C:attention}scoring{} {V:1}#1#{}",
-          "for {C:attention}two{} hands in a row",
-        }
-      },
+      -- -- Informational
+      -- paperback_suit_drink = {
+      --   name = "Suit Drink",
+      --   text = {
+      --     "This Joker {C:red}self-destructs{} after",
+      --     "playing no {C:attention}scoring{} {V:1}#1#{}",
+      --     "for {C:attention}two{} hands in a row",
+      --   }
+      -- },
     },
     Partner = {
       pnr_paperback_virtual = {
