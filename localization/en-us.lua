@@ -152,7 +152,8 @@ return {
         text = {
           "All cards are face down;",
           "cards played face down",
-          "are redrawn face up"
+          "are redrawn face up",
+          "{s:0.8}+#1# Hand{}"
         }
       },
       bl_paperback_glissando = {

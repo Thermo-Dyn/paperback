@@ -7,6 +7,7 @@ SMODS.Blind {
   boss_colour = HEX('D19EC3'),
   atlas = 'music_blinds_atlas',
   pos = { y = 0 },
+  extra_hands = 1,
 
   stay_flipped = function(self, area, card)
     if area == G.hand and not card.ability.paperback_hold_returned then return true end
@@ -44,13 +45,33 @@ SMODS.Blind {
       for i, v in ipairs(redraw) do
         v.ability.paperback_hold_returning = nil
         v.ability.paperback_hold_returned = true
-        draw_card(G.discard, G.hand, i*100/#redraw, "up", true, v)
+        draw_card(G.discard, G.hand, i * 100 / #redraw, "up", true, v)
       end
       if #redraw > 0 then
         return {
-          modify = -#redraw
+          modify = - #redraw
         }
       end
     end
+  end,
+
+  set_blind = function(self)
+    ease_hands_played(self.extra_hands)
+  end,
+
+  loc_vars = function(self)
+    return {
+      vars = {
+        self.extra_hands or 1,
+      }
+    }
+  end,
+
+  collection_loc_vars = function(self)
+    return {
+      vars = {
+        self.extra_hands or 1,
+      }
+    }
   end
 }
