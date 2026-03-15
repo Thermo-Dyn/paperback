@@ -2,7 +2,7 @@ PB_UTIL.EGO_Gift {
   key = 'fiery_down',
   config = {
     sin = 'lust',
-    threshold = 10,
+    threshold = 15,
     discarded = 0
   },
   atlas = 'ego_gift_atlas',
@@ -12,10 +12,12 @@ PB_UTIL.EGO_Gift {
 
 
   ego_loc_vars = function(self, info_queue, card)
-    return { vars = {
-      card.ability.threshold,
-      card.ability.threshold - card.ability.discarded,
-    } }
+    return {
+      vars = {
+        card.ability.threshold,
+        card.ability.threshold - card.ability.discarded,
+      }
+    }
   end,
   ego_gift_calc = function(self, card, context)
     if context.pre_discard and not context.blueprint
