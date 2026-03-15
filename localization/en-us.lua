@@ -1933,7 +1933,7 @@ return {
         name = "Stout",
         text = {
           "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
-          "{C:chips}+ X#3#{} Chips when scored",
+          "{C:chips}+#3#{} Chips when scored",
         },
       },
       j_paperback_aperol = {
@@ -1947,7 +1947,7 @@ return {
         name = "Blue Curaçao",
         text = {
           "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
-          "{C:mult}+#3#{} when scored",
+          "{C:mult}+#3#{} Mult when scored",
         },
       },
       j_paperback_nigori = {

@@ -1357,28 +1357,30 @@ end
 function PB_UTIL.suit_drink_calculate(self, card, context)
   if context.individual and context.cardarea == G.play then
     if context.other_card:is_suit(card.ability.extra.suit) then
-      context.other_card.ability[card.ability.extra.upgrade] =
-          (context.other_card.ability[card.ability.extra.upgrade] or 1) + card.ability.extra.amount
+      if card.ability.extra.remaining > 0 then
+        context.other_card.ability[card.ability.extra.upgrade] =
+            (context.other_card.ability[card.ability.extra.upgrade] or 1) + card.ability.extra.amount
 
-
-      if not context.blueprint then
-        card.ability.extra.remaining = card.ability.extra.remaining - 1
-        if card.ability.extra.remaining == 0 then
-          PB_UTIL.destroy_joker(card)
-          card.ability.extra.consumed = true
-          return {
-            message = localize('paperback_consumed_ex'),
-            colour = G.C.RED,
-            message_card = card
-          }
+        if not context.blueprint then
+          card.ability.extra.remaining = card.ability.extra.remaining - 1
         end
-      end
 
-      return {
-        message = localize('k_upgrade_ex'),
-        colour = G.C.SUITS[card.ability.extra.suit],
-      }
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.SUITS[card.ability.extra.suit],
+        }
+      end
     end
+  end
+
+  if context.after and not context.blueprint and card.ability.extra.remaining == 0 then
+    PB_UTIL.destroy_joker(card)
+
+    return {
+      message = localize('paperback_consumed_ex'),
+      colour = G.C.RED,
+      message_card = card
+    }
   end
 end
 
