@@ -4151,6 +4151,7 @@ return {
       paperback_ui_info_expanded = "( i )",
       paperback_ui_remaining_hands = "Remaining Hands",
       paperback_ui_show_credits = "Show Credits",
+      paperback_ui_upgrade_indicators = "Show Upgrade Indicators",
 
       -- Plague Doctor's quotes
       paperback_plague_quote_1_1 = 'On this rock I will build my church, and the',

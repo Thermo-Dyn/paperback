@@ -11,5 +11,6 @@ return {
   ego_gifts_enabled = true,
   spectrals_enabled = true,
   plague_doctor_quotes_enabled = true,
-  show_credits = true
+  show_credits = true,
+  upgrade_indicators = true,
 }
