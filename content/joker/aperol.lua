@@ -6,7 +6,6 @@ SMODS.Joker {
       amount = 2,
       remaining = 5,
       upgrade = "perma_p_dollars",
-      consumed = false,
     }
   },
   rarity = 2,

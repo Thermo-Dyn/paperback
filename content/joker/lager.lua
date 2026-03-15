@@ -5,8 +5,7 @@ SMODS.Joker {
       suit = "paperback_Crowns",
       amount = 1,
       remaining = 5,
-      upgrade = "perma_p_odds",
-      consumed = false,
+      upgrade = "perma_paperback_plus_odds",
     }
   },
   rarity = 2,
@@ -15,7 +14,7 @@ SMODS.Joker {
   cost = 6,
   unlocked = true,
   discovered = false,
-  blueprint_compat = false,
+  blueprint_compat = true,
   eternal_compat = false,
   perishable_compat = false,
   soul_pos = nil,

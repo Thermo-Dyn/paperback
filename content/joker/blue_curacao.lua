@@ -5,7 +5,6 @@ SMODS.Joker {
       amount = 6,
       remaining = 5,
       upgrade = "perma_mult",
-      consumed = false,
       suit = "Clubs",
     }
   },

@@ -5,7 +5,6 @@ SMODS.Joker {
       amount = 0.3,
       remaining = 5,
       upgrade = "perma_x_chips",
-      consumed = false,
       suit = "paperback_Stars",
     }
   },

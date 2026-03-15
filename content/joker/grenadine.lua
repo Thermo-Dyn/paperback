@@ -6,7 +6,6 @@ SMODS.Joker {
       suit = "Hearts",
       remaining = 5,
       upgrade = "perma_x_mult",
-      consumed = false,
     }
   },
   rarity = 2,
