@@ -69,6 +69,22 @@ SMODS.current_mod.calculate = function(self, context)
   if context.before then
     PB_UTIL.calculate_highest_shared_played(card)
   end
+
+  -- handle permabonus odds
+  if context.before then
+    for i, v in ipairs(context.scoring_hand) do
+      G.GAME.paperback.permabonus_odds = G.GAME.paperback.permabonus_odds + v.ability.perma_paperback_plus_odds
+    end
+  end
+  if context.mod_probability then
+    local h_odds = 0
+    for i, v in ipairs(G.hand.cards) do
+      h_odds = h_odds + v.ability.perma_paperback_h_plus_odds
+    end
+    return {
+      numerator = context.numerator + h_odds + G.GAME.paperback.permabonus_odds
+    }
+  end
 end
 
 -- Sleeved cards can't be debuffed

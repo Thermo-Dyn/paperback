@@ -41,6 +41,8 @@ function Game.init_game_object(self)
     jester_destroying_cards = false,
     coin_collection_adding_money = false,
 
+    permabonus_odds = 0,
+
     weather_radio_hand = 'High Card',
     joke_master_hand = 'High Card',
     da_capo_suit = 'Clubs',

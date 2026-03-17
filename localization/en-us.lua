@@ -3530,6 +3530,16 @@ return {
       }
     },
     Other = {
+      perma_paperback_plus_odds = {
+        text = {
+          "{C:green}#1#{} odds when played and scoring"
+        }
+      },
+      perma_paperback_h_plus_odds = {
+        text = {
+          "{C:green}#1#{} odds when held in hand"
+        }
+      },
       undiscovered_paperback_minor_arcana = {
         name = "Not Discovered",
         text = {
