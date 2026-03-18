@@ -13,14 +13,14 @@ SMODS.Blind {
     G.E_MANAGER:add_event(Event({
       trigger = "after",
       func = function()
-        G.jokers.cards[1]:remove_sticker("pinned")
+        SMODS.Stickers.pinned:apply(G.jokers.cards[1], false)
         return true
       end
     }))
   end,
 
   defeat = function(self)
-    G.jokers.cards[1]:remove_sticker("pinned")
+    SMODS.Stickers.pinned:apply(G.jokers.cards[1], false)
   end,
 
   calculate = function(self, blind, context)
