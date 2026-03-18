@@ -21,11 +21,11 @@ PB_UTIL.MinorArcana {
 
   use = function(self, card)
     local cards = PB_UTIL.get_sorted_by_position(G.hand)
-    local target = cards[1]
+    local target = cards[#cards]
     local enhancement = target.config.center.key
 
     PB_UTIL.use_consumable_animation(card, cards, function()
-      for i = 2, #cards do
+      for i = 1, #cards - 1 do
         cards[i]:set_ability(enhancement)
       end
     end)

@@ -21,18 +21,18 @@ PB_UTIL.MinorArcana {
   can_use = function(self, card)
     if #G.hand.highlighted <= card.ability.max_highlighted and #G.hand.highlighted >= card.ability.min_highlighted then
       local cards = PB_UTIL.get_sorted_by_position(G.hand)
-      local source = cards[1]
+      local source = cards[#cards]
       return not SMODS.has_no_rank(source)
     end
   end,
 
   use = function(self, card)
     local cards = PB_UTIL.get_sorted_by_position(G.hand)
-    local source = cards[1]
+    local source = cards[#cards]
     local rank = source.base.value
 
     PB_UTIL.use_consumable_animation(card, cards, function()
-      for i = 2, #cards do
+      for i = 1, #cards - 1 do
         SMODS.change_base(cards[i], nil, rank)
       end
     end)
