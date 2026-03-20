@@ -85,6 +85,9 @@ SMODS.current_mod.calculate = function(self, context)
       numerator = context.numerator + h_odds + G.GAME.paperback.permabonus_odds
     }
   end
+  if context.after then
+    G.GAME.paperback.permabonus_odds = 0
+  end
 end
 
 -- Sleeved cards can't be debuffed
