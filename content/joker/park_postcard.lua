@@ -40,7 +40,7 @@ SMODS.Joker {
     if context.playing_card_added or context.remove_playing_cards and not context.blueprint then
       card.ability.extra.xm = 1
       return {
-        message = localize('paperback_downgrade_ex'),
+        message = localize('k_reset'),
         colour = G.C.ORANGE
       }
     end
