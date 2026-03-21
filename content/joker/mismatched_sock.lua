@@ -41,6 +41,16 @@ SMODS.Joker {
       end
     end
 
+    if context.before and not context.blueprint then
+      if next(context.poker_hands['Pair']) then
+        card.ability.extra.x_mult = 1
+        return {
+          message = localize('k_reset'),
+          colour = G.C.ORANGE
+        }
+      end
+    end
+
     -- Give mult during scoring
     if context.joker_main then
       return {

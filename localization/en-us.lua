@@ -1621,6 +1621,7 @@ return {
           "This Joker gains {X:mult,C:white}X#1#",
           "Mult if discard contains",
           "exactly {C:attention}one{} card",
+          "Resets if played hand contains a {C:attention}Pair{}",
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
         },
       },
