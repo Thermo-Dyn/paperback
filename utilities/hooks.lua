@@ -341,11 +341,13 @@ end
 
 local can_sell_ref = Card.can_sell_card
 function Card.can_sell_card(self, context)
-  if self.ability.sin and self.ability.sin == 'sloth' then
+  if self.ability.sin then
     if self.ability.paperback_corroded then
       return true
-    else
+    elseif self.ability.sin == 'sloth' then
       return G.GAME.paperback.skipped_blind
+    elseif self.ability.sin == 'pride' then
+      return (G.GAME.dollars + PB_UTIL.EGO_GIFT_SINS[self.ability.sin][1]) >= G.GAME.bankrupt_at
     end
   end
 
