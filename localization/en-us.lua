@@ -4138,6 +4138,8 @@ return {
       paperback_off_switch_ex = "Swing!",
       paperback_one_shift_more_true = "Heart!",
       paperback_one_shift_more_false = "Beat!",
+      paperback_warning_ex = "Warning!",
+      paperback_watch_ex = "Watch!",
 
       paperback_ui_requires_restart = "Requires Restart",
       paperback_ui_no_requires_restart = "Doesn't Require Restart",
