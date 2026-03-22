@@ -382,10 +382,10 @@ return {
       j_paperback_double_dutchman = {
         name = "Double Dutchman",
         text = {
-          "For the next {C:attention}#3#{} hands,",
+          "For the next {C:attention}#4#{} hands,",
           "each card {C:attention}held in hand{} has a",
           "{C:green}#1# in #2#{} chance to get a random {C:attention}enhancement{}",
-          "and a {C:green}#1# in #2#{} chance to get a random {C:attention}seal{}"
+          "and a {C:green}#1# in #3#{} chance to get a random {C:attention}seal{}"
         }
       },
       j_paperback_one_sin_and_hundreds_of_good_deeds = {

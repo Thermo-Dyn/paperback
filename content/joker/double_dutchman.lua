@@ -23,12 +23,14 @@ SMODS.Joker {
 
   loc_vars = function(self, info_queue, card)
     local numerator, denominator = PB_UTIL.chance_vars(card)
+    local seal_den = denominator * 2
 
     return {
       vars = {
         numerator,
         denominator,
-        card.ability.extra.hands_left
+        seal_den,
+        card.ability.extra.hands_left,
       }
     }
   end,
@@ -54,7 +56,7 @@ SMODS.Joker {
           })
         end
 
-        if PB_UTIL.chance(card, 'dd_seal_roll') and not v.seal then
+        if PB_UTIL.chance(card, 'dd_seal_roll', 1, card.ability.extra.odds * 2) and not v.seal then
           local seal = SMODS.poll_seal {
             key = 'dd_seal',
             guaranteed = true
