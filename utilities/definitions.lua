@@ -1022,6 +1022,17 @@ if PB_UTIL.config.paperclips_enabled then
       card.ability[self.key] = val and copy_table(self.config) or nil
     end
   }
+
+  -- allow paperclips to appear in standard packs
+  local create_card_ref = G.P_CENTERS.p_standard_normal_1.create_card
+  SMODS.Booster:take_ownership_by_kind("Standard", {
+    create_card = function(self, card, i)
+      local _card = SMODS.create_card(create_card_ref(self, card, i))
+      local clip = pseudorandom(pseudoseed("std_clip" .. G.GAME.round_resets.ante)) > 0.7 and PB_UTIL.poll_paperclip("std_clip")
+      if clip then PB_UTIL.set_paperclip(_card, clip) end
+      return _card
+    end
+  }, true)
 end
 
 -- Define custom MinorArcana object with shared properties for handling common behavior
