@@ -68,8 +68,13 @@ SMODS.Joker {
             draw_card(G.play, G.hand, 90, 'up')
           end
 
-          save_run()
-
+          G.E_MANAGER:add_event(Event {
+            trigger = 'immediate',
+            delay = 0.5,
+            func = function()
+              save_run()
+            end
+          })
           return true
         end
       })
