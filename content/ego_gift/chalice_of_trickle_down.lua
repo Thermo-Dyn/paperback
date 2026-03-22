@@ -30,7 +30,7 @@ PB_UTIL.EGO_Gift {
         end
 
         return {
-          dollars = smallest,
+          dollars = math.floor(smallest / 2),
           card = context.scoring_hand[index]
         }
       end
