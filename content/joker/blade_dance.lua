@@ -73,8 +73,10 @@ SMODS.Joker {
             delay = 0.5,
             func = function()
               save_run()
+              return true
             end
           })
+
           return true
         end
       })
