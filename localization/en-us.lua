@@ -894,7 +894,7 @@ return {
         name = "Weather Radio",
         text = {
           "This Joker gains {X:mult,C:white}X#1#{} Mult if",
-          "{C:attention}poker hand{} contains a {C:attention}#2#{}.",
+          "{C:attention}played hand{} contains a {C:attention}#2#{}.",
           "During {C:attention}Boss Blind{}, if this Joker has",
           "{X:mult,C:white}X#3#{} Mult or more, disable {C:attention}Boss Blind{}",
           "and this Joker loses {X:mult,C:white}X#4#{} Mult",

@@ -23,6 +23,7 @@ SMODS.Joker {
 
   loc_vars = function(self, info_queue, card)
     local active, colours
+
     if card.ability.extra.active then
       active = localize('k_active')
       colours = { G.C.FILTER }
@@ -30,9 +31,10 @@ SMODS.Joker {
       active = localize('paperback_inactive')
       colours = { G.C.UI.TEXT_INACTIVE }
     end
+
     return {
       vars = {
-        card.ability.extra.hand,
+        localize(card.ability.extra.hand, 'poker_hands'),
         active,
         colours = colours,
       }
