@@ -3641,6 +3641,13 @@ return {
           "Activate {C:attention,E:1}#1#{}'s ability",
         }
       },
+      paperback_illusion_clips = {
+        name = "Added Functionality",
+        text = {
+          "{C:attention}Playing cards{} may also",
+          "have a {C:attention}Paperclip{}"
+        }
+      },
 
       -- Stickers
       paperback_energized = {

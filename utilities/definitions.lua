@@ -88,6 +88,15 @@ SMODS.current_mod.calculate = function(self, context)
   if context.after then
     G.GAME.paperback.permabonus_odds = 0
   end
+
+  -- add paperclips to shop cards if Illusion is owned
+  if context.modify_shop_card and next(SMODS.find_card("v_illusion"))
+     and PB_UTIL.config.paperclips_enabled then
+    local set = context.card.config.center.set
+    if (set == "Default" or set == "Enhanced") and pseudorandom("clip_in_shop") > 0.7 then
+      PB_UTIL.set_paperclip(context.card, PB_UTIL.poll_paperclip("clip_in_shop"))
+    end
+  end
 end
 
 -- Sleeved cards can't be debuffed
@@ -1041,6 +1050,13 @@ if PB_UTIL.config.paperclips_enabled then
       return _card
     end
   }, true)
+
+  -- explain that Illusion also adds paperclips in shop
+  SMODS.Voucher:take_ownership("illusion", {
+    loc_vars = function(self, info_queue, card)
+      info_queue[#info_queue + 1] = { set = "Other", key = "paperback_illusion_clips" }
+    end
+  })
 end
 
 -- Define custom MinorArcana object with shared properties for handling common behavior
