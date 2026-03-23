@@ -11,7 +11,7 @@ SMODS.Joker {
   pos = { x = 10, y = 3 },
   atlas = "jokers_atlas",
   cost = 6,
-  blueprint_compat = true,
+  blueprint_compat = false,
   eternal_compat = true,
   perishable_compat = true,
   paperback_credit = {
@@ -32,9 +32,9 @@ SMODS.Joker {
       card.ability.extra.active = true
     end
 
-    if context.paperback and context.paperback.drawing_cards and card.ability.extra.active then
+    if context.drawing_cards and card.ability.extra.active then
       return {
-        draw_extra = card.ability.extra.cards
+        modify = card.ability.extra.cards + (math.max(context.amount, 0))
       }
     end
 
