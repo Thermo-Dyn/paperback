@@ -1,5 +1,5 @@
 local indicators = {
-  right = {
+  flags = {
     { key = "perma_mult", pos = { x = 0, y = 0 } },
     { key = "perma_x_mult", pos = { x = 1, y = 0 } },
     { key = "perma_bonus", pos = { x = 2, y = 0 } },
@@ -8,7 +8,7 @@ local indicators = {
     { key = "perma_paperback_plus_odds", pos = { x = 5, y = 0 } },
     { key = "perma_repetitions", pos = { x = 6, y = 0 } },
   },
-  left = {
+  pins = {
     { key = "perma_h_mult", pos = { x = 0, y = 1 } },
     { key = "perma_h_x_mult", pos = { x = 1, y = 1 } },
     { key = "perma_h_chips", pos = { x = 2, y = 1 } },
@@ -37,8 +37,9 @@ SMODS.Atlas {
   end
 }
 
-local RIGHT_OFFSET = 8
-local LEFT_OFFSET = -4
+local FLAG_OFFSET_X = -8
+local PIN_OFFSET_X = -1
+local PIN_OFFSET_Y = 1
 local HEIGHT = 7
 local GAP = 1
 
@@ -50,8 +51,8 @@ local function should_draw_indicator(card, key)
 end
 
 local function draw_single_indicator(card, sprite, x_offset, y_offset)
-  x_offset = (card.T.w / 71) * x_offset * card.T.scale
-  y_offset = (card.T.h / 95) * y_offset * card.T.scale
+  x_offset = (card.T.w / 71) * (x_offset or 0) * card.T.scale
+  y_offset = (card.T.h / 95) * (y_offset or 0) * card.T.scale
 
   sprite.role.draw_major = card
   sprite:draw_shader(
@@ -63,7 +64,7 @@ local function draw_single_indicator(card, sprite, x_offset, y_offset)
   )
 end
 
-local function draw_indicators(indicators, card, x_offset)
+local function draw_indicators(indicators, card, x_offset, y_offset)
   local y = GAP
 
   for _, v in ipairs(indicators) do
@@ -72,7 +73,7 @@ local function draw_indicators(indicators, card, x_offset)
         card,
         v.sprite,
         x_offset,
-        y
+        y + (y_offset or 0)
       )
 
       y = y + HEIGHT + GAP
@@ -81,21 +82,21 @@ local function draw_indicators(indicators, card, x_offset)
 end
 
 SMODS.DrawStep {
-  key = "indicators_right",
-  order = -30,
+  key = "indicators_front",
+  order = 40,
   func = function(card)
     if PB_UTIL.config.upgrade_indicators and card and card.ability then
-      draw_indicators(indicators.right, card, RIGHT_OFFSET)
+      draw_indicators(indicators.pins, card, PIN_OFFSET_X, PIN_OFFSET_Y)
     end
   end
 }
 
 SMODS.DrawStep {
-  key = "indicators_left",
-  order = 40,
+  key = "indicators_back",
+  order = -30,
   func = function(card)
     if PB_UTIL.config.upgrade_indicators and card and card.ability then
-      draw_indicators(indicators.left, card, LEFT_OFFSET)
+      draw_indicators(indicators.flags, card, FLAG_OFFSET_X)
     end
   end
 }
