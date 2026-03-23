@@ -3075,8 +3075,8 @@ return {
         name = "Three of Pentacles",
         text = {
           "Select {C:attention}#1#{} cards, the",
-          "{C:attention}rightmost two{} copy the",
-          "{C:attention}leftmost{} card's {C:attention}enhancement{}",
+          "{C:attention}leftmost two{} copy the",
+          "{C:attention}rightmost{} card's {C:attention}enhancement{}",
           "{C:inactive}(Drag to rearrange)"
         }
       },
@@ -3152,8 +3152,8 @@ return {
         name = "Queen of Pentacles",
         text = {
           "Select {C:attention}#1#{} cards.",
-          "Copy the {C:attention}left{} card's",
-          "{C:attention}rank{} onto the {C:attention}right{} card",
+          "Copy the {C:attention}right{} card's",
+          "{C:attention}rank{} onto the {C:attention}left{} card",
           "{C:inactive}(Drag to rearrange)"
         }
       },
