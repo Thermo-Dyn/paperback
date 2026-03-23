@@ -371,7 +371,7 @@ return {
         name = "Pedrillo",
         text = {
           "Scored {C:attention}Queens{}",
-          "create the {C:planet}Planet{} card",
+          "create a {C:planet}Planet{} card",
           "for played {C:attention}poker hand",
           "{C:inactive}(Must have room)"
         },
