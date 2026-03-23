@@ -1,7 +1,7 @@
 PB_UTIL.MinorArcana {
   key = 'three_of_cups',
   config = {
-    paperclip = 'paperback_black_Clip',
+    paperclip = 'paperback_black_clip',
     max_highlighted = 1
   },
   atlas = 'minor_arcana_atlas',
