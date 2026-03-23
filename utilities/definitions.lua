@@ -1270,6 +1270,8 @@ if PB_UTIL.config.ego_gifts_enabled then
     calculate = function(self, card, context)
       if context.selling_self then
         if card.ability.sin then
+          G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts = (G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts or 0) + 1
+          G:save_settings()
           G.GAME.paperback.sold_ego_gifts[#G.GAME.paperback.sold_ego_gifts + 1] = card
           check_for_unlock({ type = 'paperback_sold_ego_gifts' })
           SMODS.calculate_context({
