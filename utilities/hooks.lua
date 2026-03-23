@@ -148,7 +148,7 @@ function eval_card(card, context)
   end
 
   -- trigger chips (or mult) from Soaked Cards scoring
-  if context.paperback and context.paperback.soaked and not(context.repetition_only or card.area ~= G.hand) then
+  if context.paperback and context.paperback.soaked and not (context.repetition_only or card.area ~= G.hand) then
     if next(SMODS.find_card("j_paperback_blood_rain")) then
       ret.playing_card = { mult = card.base.nominal }
     else
@@ -391,10 +391,11 @@ local copy_card_ref = copy_card
 copy_card = function(other, new_card, card_scale, playing_card, strip_edition)
   local card = copy_card_ref(other, new_card, card_scale, playing_card, strip_edition)
   local clip = PB_UTIL.has_paperclip(card)
-  clip = clip and string.sub(clip, 11) -- bleh, hardcoded for paperback's prefix
-  if not G.SETTINGS.paused and PB_UTIL.is_special_clip(clip) then
+
+  if clip and not G.SETTINGS.paused and PB_UTIL.is_special_clip(clip) then
     PB_UTIL.set_paperclip(card, PB_UTIL.poll_paperclip('plat_copy', false))
   end
+
   return card
 end
 

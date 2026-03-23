@@ -1,7 +1,7 @@
 PB_UTIL.MinorArcana {
   key = 'page_of_cups',
   config = {
-    paperclip = 'white',
+    paperclip = 'paperback_white_clip',
     max_highlighted = 3
   },
   atlas = 'minor_arcana_atlas',

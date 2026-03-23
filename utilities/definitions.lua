@@ -997,6 +997,7 @@ end
 
 -- Define Paperclip object
 if PB_UTIL.config.paperclips_enabled then
+  PB_UTIL.Paperclips = {}
   PB_UTIL.Paperclip = SMODS.Sticker:extend {
     prefix_config = { key = true },
     should_apply = function(self, card, center, area, bypass_roll)
@@ -1004,9 +1005,15 @@ if PB_UTIL.config.paperclips_enabled then
     end,
     config = {},
     rate = 0,
+    special = false,
     sets = {
       Default = true
     },
+
+    inject = function(self, i)
+      SMODS.Sticker.inject(self, i)
+      table.insert(PB_UTIL.Paperclips, self.key)
+    end,
 
     draw = function(self, card)
       local x_offset = (card.T.w / 71) * -4 * card.T.scale
@@ -1028,7 +1035,8 @@ if PB_UTIL.config.paperclips_enabled then
   SMODS.Booster:take_ownership_by_kind("Standard", {
     create_card = function(self, card, i)
       local _card = SMODS.create_card(create_card_ref(self, card, i))
-      local clip = pseudorandom(pseudoseed("std_clip" .. G.GAME.round_resets.ante)) > 0.7 and PB_UTIL.poll_paperclip("std_clip")
+      local clip = pseudorandom(pseudoseed("std_clip" .. G.GAME.round_resets.ante)) > 0.7
+          and PB_UTIL.poll_paperclip("std_clip")
       if clip then PB_UTIL.set_paperclip(_card, clip) end
       return _card
     end
@@ -1347,7 +1355,6 @@ if PB_UTIL.config.suits_enabled then
   }
 end
 
---- @alias Paperclip "blue" | "black" | "white" | "red" | "orange" | "pink" | "yellow" | "gold" | "platinum"
 PB_UTIL.ENABLED_PAPERCLIPS = {
   "white_clip",
   "black_clip",
@@ -1359,9 +1366,5 @@ PB_UTIL.ENABLED_PAPERCLIPS = {
   "blue_clip",
   "purple_clip",
   "pink_clip",
-  "platinum_clip"
-}
---- @alias Special_Paperclip  "platinum"
-PB_UTIL.SPECIAL_PAPERCLIPS = {
   "platinum_clip"
 }

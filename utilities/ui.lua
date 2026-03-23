@@ -243,9 +243,9 @@ end
 
 -- Create collection entry for Paperclips
 if PB_UTIL.config.paperclips_enabled then
-  local amount = #PB_UTIL.ENABLED_PAPERCLIPS
-
   SMODS.current_mod.custom_collection_tabs = function()
+    local amount = #PB_UTIL.Paperclips
+
     return {
       UIBox_button({
         button = 'your_collection_paperback_paperclips',
@@ -261,10 +261,8 @@ if PB_UTIL.config.paperclips_enabled then
   local function paperclips_ui()
     local paperclips = {}
 
-    for k, v in pairs(SMODS.Stickers) do
-      if PB_UTIL.is_paperclip(k) then
-        paperclips[k] = v
-      end
+    for _, k in ipairs(PB_UTIL.Paperclips) do
+      paperclips[k] = SMODS.Stickers[k]
     end
 
     return SMODS.card_collection_UIBox(paperclips, { 6, 5 }, {
@@ -291,11 +289,10 @@ if PB_UTIL.config.paperclips_enabled then
   local function wrap_without_paperclips(func)
     -- Remove our paperclips from SMODS.Stickers just for this function call
     local removed = {}
-    for k, v in pairs(SMODS.Stickers) do
-      if PB_UTIL.is_paperclip(k) then
-        removed[k] = v
-        SMODS.Stickers[k] = nil
-      end
+
+    for _, k in ipairs(PB_UTIL.Paperclips) do
+      removed[k] = SMODS.Stickers[k]
+      SMODS.Stickers[k] = nil
     end
 
     local ret = func()
@@ -383,10 +380,11 @@ function PB_UTIL.suit_tooltip(type)
   }
 end
 
---- @param type Paperclip
+--- @param key string
 --- @return table | nil
-function PB_UTIL.paperclip_tooltip(type)
-  local key = 'paperback_' .. type .. '_clip'
+function PB_UTIL.paperclip_tooltip(key)
+  if not PB_UTIL.is_paperclip(key) then return end
+
   local paperclip = SMODS.Stickers[key]
   local vars = {}
 

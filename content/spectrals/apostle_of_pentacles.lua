@@ -2,7 +2,7 @@ SMODS.Consumable {
   key = 'apostle_of_pentacles',
   config = {
     max_highlighted = 1,
-    paperclip = 'platinum'
+    paperclip = 'paperback_platinum_clip'
   },
   set = 'Spectral',
   atlas = 'spectral_atlas',
