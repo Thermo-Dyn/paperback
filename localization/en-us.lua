@@ -724,6 +724,14 @@ return {
           "{C:blue}Common {C:attention}Jokers"
         }
       },
+      j_paperback_ampersand = {
+        name = "&",
+        text = {
+          "If scored hand contains both",
+          "{C:paperback_dark_suit}dark{} and {C:paperback_light_suit}light suits{},",
+          "retrigger the first of each {C:attention}#1#{} time"
+        },
+      },
       j_paperback_insurance_policy = {
         name = "Insurance Policy",
         text = {

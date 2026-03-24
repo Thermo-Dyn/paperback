@@ -91,7 +91,7 @@ SMODS.current_mod.calculate = function(self, context)
 
   -- add paperclips to shop cards if Illusion is owned
   if context.modify_shop_card and next(SMODS.find_card("v_illusion"))
-     and PB_UTIL.config.paperclips_enabled then
+  and PB_UTIL.config.paperclips_enabled then
     local set = context.card.config.center.set
     if (set == "Default" or set == "Enhanced") and pseudorandom("clip_in_shop") > 0.7 then
       PB_UTIL.set_paperclip(context.card, PB_UTIL.poll_paperclip("clip_in_shop"))
@@ -494,7 +494,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "banana_man",
   "mind_electric",
   "the_normal_joker",
-  -- "ampersand",
+  "ampersand",
   "shuttle",
   "silent_assassin",
   "insurance_policy",
@@ -1270,7 +1270,8 @@ if PB_UTIL.config.ego_gifts_enabled then
     calculate = function(self, card, context)
       if context.selling_self then
         if card.ability.sin then
-          G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts = (G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts or 0) + 1
+          G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts = (G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts or 0) +
+          1
           G:save_settings()
           G.GAME.paperback.sold_ego_gifts[#G.GAME.paperback.sold_ego_gifts + 1] = card
           check_for_unlock({ type = 'paperback_sold_ego_gifts' })
