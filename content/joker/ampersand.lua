@@ -57,9 +57,9 @@ SMODS.Joker {
 
       if counter >= 2 and (cards.dark == context.other_card or cards.light == context.other_card or PB_UTIL.find(cards.wild, context.other_card)) then
         local BGcolour
-        if not card.ability.extra.is_white then
+        if card.ability.extra.is_white then
           BGcolour = G.C.BLACK
-          if context.blueprint then
+          if not context.blueprint then
             card.ability.extra.is_white = false
           end
         else
