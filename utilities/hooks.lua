@@ -38,9 +38,10 @@ function Game.init_game_object(self)
     finished_antes = {},
     find_jimbo_unlock = false,
     max_consumeables = 0,
-    let_it_happen_unlock_check = false,
     jester_destroying_cards = false,
     coin_collection_adding_money = false,
+
+    permabonus_odds = 0,
 
     weather_radio_hand = 'High Card',
     joke_master_hand = 'High Card',
@@ -119,11 +120,12 @@ function Card.draw(self, layer)
   return ret
 end
 
--- Count scored Clips each round
+-- multiple things to do here
 local eval_card_ref = eval_card
 function eval_card(card, context)
   local ret, ret2 = eval_card_ref(card, context)
 
+  -- Count scored Clips each round
   if context.cardarea == G.play and context.main_scoring and ret and ret.playing_card then
     if PB_UTIL.has_paperclip(card) then
       G.GAME.paperback.round.scored_clips = G.GAME.paperback.round.scored_clips + 1
@@ -142,6 +144,15 @@ function eval_card(card, context)
           })
         end
       end
+    end
+  end
+
+  -- trigger chips (or mult) from Soaked Cards scoring
+  if context.paperback and context.paperback.soaked and not (context.repetition_only or card.area ~= G.hand) then
+    if next(SMODS.find_card("j_paperback_blood_rain")) then
+      ret.playing_card = { mult = card.base.nominal }
+    else
+      ret.playing_card = { chips = card:get_chip_bonus() }
     end
   end
 
@@ -330,11 +341,13 @@ end
 
 local can_sell_ref = Card.can_sell_card
 function Card.can_sell_card(self, context)
-  if self.ability.sin and self.ability.sin == 'sloth' then
+  if self.ability.sin then
     if self.ability.paperback_corroded then
       return true
-    else
+    elseif self.ability.sin == 'sloth' then
       return G.GAME.paperback.skipped_blind
+    elseif self.ability.sin == 'pride' then
+      return (G.GAME.dollars + PB_UTIL.EGO_GIFT_SINS[self.ability.sin][1]) >= G.GAME.bankrupt_at
     end
   end
 
@@ -378,10 +391,11 @@ local copy_card_ref = copy_card
 copy_card = function(other, new_card, card_scale, playing_card, strip_edition)
   local card = copy_card_ref(other, new_card, card_scale, playing_card, strip_edition)
   local clip = PB_UTIL.has_paperclip(card)
-  clip = clip and string.sub(clip, 11) -- bleh, hardcoded for paperback's prefix
-  if not G.SETTINGS.paused and PB_UTIL.is_special_clip(clip) then
+
+  if clip and not G.SETTINGS.paused and PB_UTIL.is_special_clip(clip) then
     PB_UTIL.set_paperclip(card, PB_UTIL.poll_paperclip('plat_copy', false))
   end
+
   return card
 end
 

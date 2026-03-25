@@ -31,17 +31,14 @@ SMODS.Joker {
     return {
       vars = {
         other_name,
-        localize { type = 'name_text', set = 'Stake', key = 'stake_gold' },
-        colours = { get_stake_col(8) }
+        localize { type = 'name_text', set = 'Stake', key = 'stake_purple' },
+        colours = { get_stake_col(6) }
       }
     }
   end,
 
   check_for_unlock = function(self, args)
-    if args.type == 'win_deck' and (get_deck_win_stake('b_plasma') > 1) then
-      G.GAME.paperback.let_it_happen_unlock_check = true
-    end
-    return G.GAME.paperback.let_it_happen_unlock_check and args.type == 'win_stake' and get_deck_win_stake() >= 8
+    return args.type == 'win' and G.GAME.selected_back.effect.center.key == 'b_plasma' and G.GAME.stake >= 6
   end,
 
   loc_vars = function(self, info_queue, card)

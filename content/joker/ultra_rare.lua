@@ -38,12 +38,21 @@ SMODS.Joker {
 
   calculate = function(self, card, context)
     if context.setting_blind then
-      for _, v in ipairs(card.ability.extra.rarities) do
+      for _, rarity in ipairs(card.ability.extra.rarities) do
+        local valid_jokers = {}
+
+        for _, v in ipairs(get_current_pool("Joker", rarity)) do
+          if v ~= "UNAVAILABLE" then
+            valid_jokers[#valid_jokers + 1] = v
+          end
+        end
+
+        local selected_joker = pseudorandom_element(valid_jokers) or 'j_joker'
+
         G.E_MANAGER:add_event(Event {
           func = function()
             local c = SMODS.add_card {
-              set = 'Joker',
-              rarity = v,
+              key = selected_joker,
               edition = 'e_negative'
             }
 

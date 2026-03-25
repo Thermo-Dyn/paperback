@@ -152,7 +152,8 @@ return {
         text = {
           "All cards are face down;",
           "cards played face down",
-          "are redrawn face up"
+          "are redrawn face up",
+          "{s:0.8}+#1# Hand{}"
         }
       },
       bl_paperback_glissando = {
@@ -370,7 +371,7 @@ return {
         name = "Pedrillo",
         text = {
           "Scored {C:attention}Queens{}",
-          "create the {C:planet}Planet{} card",
+          "create a {C:planet}Planet{} card",
           "for played {C:attention}poker hand",
           "{C:inactive}(Must have room)"
         },
@@ -381,10 +382,10 @@ return {
       j_paperback_double_dutchman = {
         name = "Double Dutchman",
         text = {
-          "For the next {C:attention}#3#{} hands,",
+          "For the next {C:attention}#4#{} hands,",
           "each card {C:attention}held in hand{} has a",
           "{C:green}#1# in #2#{} chance to get a random {C:attention}enhancement{}",
-          "and a {C:green}#1# in #2#{} chance to get a random {C:attention}seal{}"
+          "and a {C:green}#1# in #3#{} chance to get a random {C:attention}seal{}"
         }
       },
       j_paperback_one_sin_and_hundreds_of_good_deeds = {
@@ -723,6 +724,14 @@ return {
           "{C:blue}Common {C:attention}Jokers"
         }
       },
+      j_paperback_ampersand = {
+        name = "&",
+        text = {
+          "If scored hand contains both",
+          "{C:paperback_dark_suit}dark{} and {C:paperback_light_suit}light suits{},",
+          "retrigger the first of each {C:attention}#1#{} time"
+        },
+      },
       j_paperback_insurance_policy = {
         name = "Insurance Policy",
         text = {
@@ -893,7 +902,7 @@ return {
         name = "Weather Radio",
         text = {
           "This Joker gains {X:mult,C:white}X#1#{} Mult if",
-          "{C:attention}poker hand{} contains a {C:attention}#2#{}.",
+          "{C:attention}played hand{} contains a {C:attention}#2#{}.",
           "During {C:attention}Boss Blind{}, if this Joker has",
           "{X:mult,C:white}X#3#{} Mult or more, disable {C:attention}Boss Blind{}",
           "and this Joker loses {X:mult,C:white}X#4#{} Mult",
@@ -1620,6 +1629,7 @@ return {
           "This Joker gains {X:mult,C:white}X#1#",
           "Mult if discard contains",
           "exactly {C:attention}one{} card",
+          "Resets if played hand contains a {C:attention}Pair{}",
           "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
         },
       },
@@ -1875,7 +1885,7 @@ return {
           "{C:inactive}(Currently {X:mult,C:white}X#2#{} {C:inactive}Mult)",
         },
         unlock = {
-          "Use {C:attention,E:1}#1#{} different {C:attention,E:1}#3#{}",
+          "Use {C:attention,E:1}#1#{} different {C:planet}#2#{}",
           "cards in a run"
         }
       },
@@ -1924,49 +1934,43 @@ return {
       j_paperback_grenadine = {
         name = "Grenadine",
         text = {
-          "Scored {C:hearts}#1#{} cards give {X:mult,C:white}X#2#{} Mult when scored",
-          "Increases by {X:mult,C:white}X#3#{} when a {C:green}probability{} fails",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{X:mult,C:white}X#3#{} Mult when scored",
         },
       },
       j_paperback_stout = {
         name = "Stout",
         text = {
-          "Scored {C:spades}#1#{} cards give {X:chips,C:white}X#2#{} chips when scored",
-          "Increases by {X:chips,C:white}X#3#{} when {C:attention}#4#{} or more",
-          "played {C:spades}#1#{} are scoring",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:chips}+#3#{} Chips when scored",
         },
       },
       j_paperback_aperol = {
         name = "Aperol",
         text = {
-          "Scored {C:diamonds}#3#{} cards give {C:mult}+#1#{} Mult",
-          "for every {C:money}$#2#{} owned when scored",
-          "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:money}$#3#{} when scored",
         },
       },
       j_paperback_blue_curacao = {
         name = "Blue Curaçao",
         text = {
-          "Scored {C:clubs}#1#{} cards give {X:mult,C:white}X#2#{} Mult when scored",
-          "Increases by {X:mult,C:white}X#3#{} when {C:attention}#4#{} or more",
-          "played {C:clubs}#1#{} are scoring",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:mult}+#3#{} Mult when scored",
         },
       },
       j_paperback_nigori = {
         name = "Nigori",
         text = {
-          "Scored {C:paperback_stars}#1#{} cards give",
-          "{C:chips}+#2#{} Chips when scored",
-          "Increases by {C:chips}+#3#{} whenever",
-          "{X:chips,C:white}XChips{} is scored",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{X:chips,C:white}X#3#{} chips when scored",
         },
       },
       j_paperback_lager = {
         name = "Lager",
         text = {
-          "{C:attention}+#1#{} Consumable slots",
-          "Increases by {C:attention}+#2#{} if scoring hand",
-          "contains at least {C:attention}#3#{} {C:paperback_crowns}#4#{}",
+          "The next {C:attention}#1#{} scored {V:1}#2#{} permanently gain",
+          "{C:green}+#3#{} odds when scored",
         },
       },
       j_paperback_paranoia = {
@@ -3079,8 +3083,8 @@ return {
         name = "Three of Pentacles",
         text = {
           "Select {C:attention}#1#{} cards, the",
-          "{C:attention}rightmost two{} copy the",
-          "{C:attention}leftmost{} card's {C:attention}enhancement{}",
+          "{C:attention}leftmost two{} copy the",
+          "{C:attention}rightmost{} card's {C:attention}enhancement{}",
           "{C:inactive}(Drag to rearrange)"
         }
       },
@@ -3156,8 +3160,8 @@ return {
         name = "Queen of Pentacles",
         text = {
           "Select {C:attention}#1#{} cards.",
-          "Copy the {C:attention}left{} card's",
-          "{C:attention}rank{} onto the {C:attention}right{} card",
+          "Copy the {C:attention}right{} card's",
+          "{C:attention}rank{} onto the {C:attention}left{} card",
           "{C:inactive}(Drag to rearrange)"
         }
       },
@@ -3535,6 +3539,16 @@ return {
       }
     },
     Other = {
+      perma_paperback_plus_odds = {
+        text = {
+          "{C:green}#1#{} odds when played and scoring"
+        }
+      },
+      perma_paperback_h_plus_odds = {
+        text = {
+          "{C:green}#1#{} odds when held in hand"
+        }
+      },
       undiscovered_paperback_minor_arcana = {
         name = "Not Discovered",
         text = {
@@ -3633,6 +3647,13 @@ return {
         name = "Locked",
         text = {
           "Activate {C:attention,E:1}#1#{}'s ability",
+        }
+      },
+      paperback_illusion_clips = {
+        name = "Added Functionality",
+        text = {
+          "{C:attention}Playing cards{} may also",
+          "have a {C:attention}Paperclip{}"
         }
       },
 
@@ -3852,15 +3873,15 @@ return {
           "to be used immediately"
         }
       },
-      -- Informational
-      paperback_suit_drink = {
-        name = "Suit Drink",
-        text = {
-          "This Joker {C:red}self-destructs{} after",
-          "playing no {C:attention}scoring{} {V:1}#1#{}",
-          "for {C:attention}two{} hands in a row",
-        }
-      },
+      -- -- Informational
+      -- paperback_suit_drink = {
+      --   name = "Suit Drink",
+      --   text = {
+      --     "This Joker {C:red}self-destructs{} after",
+      --     "playing no {C:attention}scoring{} {V:1}#1#{}",
+      --     "for {C:attention}two{} hands in a row",
+      --   }
+      -- },
     },
     Partner = {
       pnr_paperback_virtual = {
@@ -4132,6 +4153,8 @@ return {
       paperback_off_switch_ex = "Swing!",
       paperback_one_shift_more_true = "Heart!",
       paperback_one_shift_more_false = "Beat!",
+      paperback_warning_ex = "Warning!",
+      paperback_watch_ex = "Watch!",
 
       paperback_ui_requires_restart = "Requires Restart",
       paperback_ui_no_requires_restart = "Doesn't Require Restart",
@@ -4156,6 +4179,7 @@ return {
       paperback_ui_info_expanded = "( i )",
       paperback_ui_remaining_hands = "Remaining Hands",
       paperback_ui_show_credits = "Show Credits",
+      paperback_ui_upgrade_indicators = "Show Upgrade Indicators",
 
       -- Plague Doctor's quotes
       paperback_plague_quote_1_1 = 'On this rock I will build my church, and the',
@@ -4223,9 +4247,8 @@ return {
       paperback_and_spacer = ' and ',
 
       -- Developers
-
       paperback_dev_dowfrin = 'Dowfrin',
-      paperback_dev_srockw = 'srockw',
+      paperback_dev_srockw = 'Srock',
       paperback_dev_papermoonqueen = 'PaperMoonQueen',
       paperback_dev_dylan_hall = 'Dylan Hall',
       paperback_dev_metanite = 'metanite64',

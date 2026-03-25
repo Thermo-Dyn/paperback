@@ -10,7 +10,13 @@ SMODS.Blind {
   pos = { y = 14 },
 
   disable = function(self)
-    SMODS.Stickers.pinned:apply(G.jokers.cards[1], false)
+    G.E_MANAGER:add_event(Event({
+      trigger = "after",
+      func = function()
+        SMODS.Stickers.pinned:apply(G.jokers.cards[1], false)
+        return true
+      end
+    }))
   end,
 
   defeat = function(self)
@@ -46,7 +52,6 @@ SMODS.Blind {
                 func = function()
                   G.jokers:shuffle("misty_bass")
                   play_sound("cardSlide1", 1)
-                  G.jokers.cards[1]:add_sticker("pinned")
                   return true
                 end
               }))

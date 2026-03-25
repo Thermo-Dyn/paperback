@@ -19,16 +19,22 @@ SMODS.Joker {
   },
 
   loc_vars = function(self, info_queue, card)
+    local last_hand_played = card.ability.extra.last_hand_played
+        and localize(card.ability.extra.last_hand_played, 'poker_hands')
+        or localize('paperback_none')
+
     return {
       vars = {
-        card.ability.extra.last_hand_played and localize(card.ability.extra.last_hand_played, 'poker_hands') or 'None',
+        last_hand_played,
         card.ability.extra.dollars
       }
     }
   end,
+
   set_ability = function(self, card, initial, delay_sprites)
     card.ability.extra.last_hand_played = G.GAME.last_hand_played
   end,
+
   calculate = function(self, card, context)
     if context.joker_main then
       if card.ability.extra.last_hand_played == G.GAME.last_hand_played then
@@ -39,6 +45,7 @@ SMODS.Joker {
       card.ability.extra.last_hand_played = G.GAME.last_hand_played
     end
   end,
+
   joker_display_def = function(JokerDisplay)
     return {
       text = {
@@ -59,5 +66,5 @@ SMODS.Joker {
             localize(card.ability.extra.last_hand_played, 'poker_hands') or 'None'
       end
     }
-  end,
+  end
 }

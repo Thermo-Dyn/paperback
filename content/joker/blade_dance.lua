@@ -40,12 +40,12 @@ SMODS.Joker {
       G.E_MANAGER:add_event(Event {
         func = function()
           for _ = 1, card.ability.extra.cards do
-            SMODS.add_card {
+            local c = SMODS.add_card {
               set = "Base",
-              enhancement = card.ability.extra.enhancement,
               stickers = { 'paperback_temporary' },
               area = G.play
             }
+            c:set_ability(card.ability.extra.enhancement)
           end
 
           SMODS.calculate_effect({
@@ -68,7 +68,14 @@ SMODS.Joker {
             draw_card(G.play, G.hand, 90, 'up')
           end
 
-          save_run()
+          G.E_MANAGER:add_event(Event {
+            trigger = 'immediate',
+            delay = 0.5,
+            func = function()
+              save_run()
+              return true
+            end
+          })
 
           return true
         end

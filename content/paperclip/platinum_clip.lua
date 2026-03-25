@@ -5,30 +5,33 @@ PB_UTIL.Paperclip {
   badge_colour = G.C.PAPERBACK_PLATINUM,
   badge_text_colour = G.C.WHITE,
   shiny = true,
+  special = true,
 
   calculate = function(self, card, context)
     if context.main_scoring and context.cardarea == G.play then
-      return { func = function()
-        for i, v in ipairs(G.hand.cards) do
-          local other_clip = not v.debuff and PB_UTIL.has_paperclip(v)
-          if other_clip then
-            local ctx = context
-            local effect = PB_UTIL.platinum_effects[other_clip](v, ctx)
-            if effect then
-              SMODS.calculate_effect(effect, v)
-              -- count as scored clip for consistency
-              G.GAME.paperback.round.scored_clips = G.GAME.paperback.round.scored_clips + 1
+      return {
+        func = function()
+          for i, v in ipairs(G.hand.cards) do
+            local other_clip = not v.debuff and PB_UTIL.has_paperclip(v)
+            if other_clip then
+              local ctx = context
+              local effect = PB_UTIL.platinum_effects[other_clip](v, ctx)
+              if effect then
+                SMODS.calculate_effect(effect, v)
+                -- count as scored clip for consistency
+                G.GAME.paperback.round.scored_clips = G.GAME.paperback.round.scored_clips + 1
+              end
             end
           end
         end
-      end}
+      }
     end
   end
 }
 
 PB_UTIL.platinum_effects = {
   paperback_white_clip = function(card)
-    SMODS.calculate_effect( { chips = card.ability.paperback_white_clip.chips }, card)
+    SMODS.calculate_effect({ chips = card.ability.paperback_white_clip.chips }, card)
   end,
 
   paperback_black_clip = function(card, context)

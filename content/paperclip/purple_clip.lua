@@ -10,12 +10,15 @@ PB_UTIL.Paperclip {
   },
 
   loc_vars = function(self, info_queue, card)
-    local num, den = SMODS.get_probability_vars(card, card.ability[self.key].numerator, card.ability[self.key].denominator, "purple_clip")
-    return { vars = {
-      num,
-      den,
-      card.ability[self.key].num_mod
-    } }
+    local num, den = SMODS.get_probability_vars(card, card.ability[self.key].numerator,
+      card.ability[self.key].denominator, "purple_clip")
+    return {
+      vars = {
+        num,
+        den,
+        card.ability[self.key].num_mod
+      }
+    }
   end,
 
   calculate = function(self, card, context)
@@ -46,7 +49,10 @@ PB_UTIL.Paperclip {
       G.E_MANAGER:add_event(Event({
         trigger = "after",
         func = function()
-          card.ability[self.key].numerator = 0
+          if card.ability[self.key] then
+            card.ability[self.key].numerator = 0
+            return true
+          end
           return true
         end
       }))

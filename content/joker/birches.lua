@@ -2,9 +2,9 @@ SMODS.Joker {
   key = "birches",
   config = {
     extra = {
-      xMult = 1.075,
-      xMult_gain = 0.075,
-      xMult_base = 1.075,
+      xMult = 1.08,
+      xMult_gain = 0.3,
+      xMult_base = 1.08,
       suit = "paperback_Stars",
     }
   },

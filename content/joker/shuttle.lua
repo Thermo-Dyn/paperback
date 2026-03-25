@@ -2,7 +2,7 @@ SMODS.Joker {
   key = "shuttle",
   config = {
     extra = {
-      max = 20,
+      max = 10,
       multiplier = 2
     }
   },

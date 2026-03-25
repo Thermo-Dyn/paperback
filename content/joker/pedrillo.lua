@@ -32,14 +32,14 @@ SMODS.Joker {
           delay = 0.0,
           func = function()
             if G.GAME.last_hand_played then
-              local _planet = nil
+              local planets = {}
               for k, v in pairs(G.P_CENTER_POOLS.Planet) do
                 if v.config.hand_type == G.GAME.last_hand_played then
-                  _planet = v.key
+                  planets[#planets + 1] = v.key
                 end
               end
-              if _planet then
-                SMODS.add_card({ key = _planet })
+              if #planets > 0 then
+                SMODS.add_card({ key = pseudorandom_element(planets, "pedrillo_planet") })
               end
               G.GAME.consumeable_buffer = 0
             end

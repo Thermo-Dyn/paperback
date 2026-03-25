@@ -15,18 +15,13 @@ SMODS.current_mod.optional_features = {
 SMODS.current_mod.calculate = function(self, context)
   -- green clip: gain mult for every other played and scored clip
   if context.before then
-    local clips_played = 0
-    for _, v in ipairs(context.scoring_hand) do
-      if not v.debuff and PB_UTIL.has_paperclip(v) then clips_played = clips_played + 1 end
-    end
-
-    local clips_played_plus_odd = PB_UTIL.count_paperclips { area = context.scoring_hand }
+    local clips_played = PB_UTIL.count_paperclips { area = context.scoring_hand }
     if clips_played > 0 then
       for _, v in ipairs(G.playing_cards) do
         local clip = PB_UTIL.has_paperclip(v)
         if clip == "paperback_green_clip" and not v.debuff then
           local clip_table = v.ability.paperback_green_clip
-          clips_played_plus_odd = clips_played_plus_odd + clip_table.odd + clips_played
+          clips_played_plus_odd = clip_table.odd + clips_played
           -- Every 2 clips go into mult,
           -- remaining odd clip goes to `odd`
           clip_table.mult = clip_table.mult + clip_table.mult_plus * math.floor(clips_played_plus_odd / 2)
@@ -73,6 +68,34 @@ SMODS.current_mod.calculate = function(self, context)
   -- Keep Reference Card global variable updated
   if context.before then
     PB_UTIL.calculate_highest_shared_played(card)
+  end
+
+  -- handle permabonus odds
+  if context.before then
+    for i, v in ipairs(context.scoring_hand) do
+      G.GAME.paperback.permabonus_odds = G.GAME.paperback.permabonus_odds + v.ability.perma_paperback_plus_odds
+    end
+  end
+  if context.mod_probability then
+    local h_odds = 0
+    for i, v in ipairs(G.hand.cards) do
+      h_odds = h_odds + v.ability.perma_paperback_h_plus_odds
+    end
+    return {
+      numerator = context.numerator + h_odds + G.GAME.paperback.permabonus_odds
+    }
+  end
+  if context.after then
+    G.GAME.paperback.permabonus_odds = 0
+  end
+
+  -- add paperclips to shop cards if Illusion is owned
+  if context.modify_shop_card and next(SMODS.find_card("v_illusion"))
+  and PB_UTIL.config.paperclips_enabled then
+    local set = context.card.config.center.set
+    if (set == "Default" or set == "Enhanced") and pseudorandom("clip_in_shop") > 0.7 then
+      PB_UTIL.set_paperclip(context.card, PB_UTIL.poll_paperclip("clip_in_shop"))
+    end
   end
 end
 
@@ -471,7 +494,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "banana_man",
   "mind_electric",
   "the_normal_joker",
-  -- "ampersand",
+  "ampersand",
   "shuttle",
   "silent_assassin",
   "insurance_policy",
@@ -983,6 +1006,7 @@ end
 
 -- Define Paperclip object
 if PB_UTIL.config.paperclips_enabled then
+  PB_UTIL.Paperclips = {}
   PB_UTIL.Paperclip = SMODS.Sticker:extend {
     prefix_config = { key = true },
     should_apply = function(self, card, center, area, bypass_roll)
@@ -990,9 +1014,15 @@ if PB_UTIL.config.paperclips_enabled then
     end,
     config = {},
     rate = 0,
+    special = false,
     sets = {
       Default = true
     },
+
+    inject = function(self, i)
+      SMODS.Sticker.inject(self, i)
+      table.insert(PB_UTIL.Paperclips, self.key)
+    end,
 
     draw = function(self, card)
       local x_offset = (card.T.w / 71) * -4 * card.T.scale
@@ -1008,6 +1038,25 @@ if PB_UTIL.config.paperclips_enabled then
       card.ability[self.key] = val and copy_table(self.config) or nil
     end
   }
+
+  -- allow paperclips to appear in standard packs
+  local create_card_ref = G.P_CENTERS.p_standard_normal_1.create_card
+  SMODS.Booster:take_ownership_by_kind("Standard", {
+    create_card = function(self, card, i)
+      local _card = SMODS.create_card(create_card_ref(self, card, i))
+      local clip = pseudorandom(pseudoseed("std_clip" .. G.GAME.round_resets.ante)) > 0.7
+          and PB_UTIL.poll_paperclip("std_clip")
+      if clip then PB_UTIL.set_paperclip(_card, clip) end
+      return _card
+    end
+  }, true)
+
+  -- explain that Illusion also adds paperclips in shop
+  SMODS.Voucher:take_ownership("illusion", {
+    loc_vars = function(self, info_queue, card)
+      info_queue[#info_queue + 1] = { set = "Other", key = "paperback_illusion_clips" }
+    end
+  })
 end
 
 -- Define custom MinorArcana object with shared properties for handling common behavior
@@ -1221,6 +1270,9 @@ if PB_UTIL.config.ego_gifts_enabled then
     calculate = function(self, card, context)
       if context.selling_self then
         if card.ability.sin then
+          G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts = (G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts or 0) +
+          1
+          G:save_settings()
           G.GAME.paperback.sold_ego_gifts[#G.GAME.paperback.sold_ego_gifts + 1] = card
           check_for_unlock({ type = 'paperback_sold_ego_gifts' })
           SMODS.calculate_context({
@@ -1322,7 +1374,6 @@ if PB_UTIL.config.suits_enabled then
   }
 end
 
---- @alias Paperclip "blue" | "black" | "white" | "red" | "orange" | "pink" | "yellow" | "gold" | "platinum"
 PB_UTIL.ENABLED_PAPERCLIPS = {
   "white_clip",
   "black_clip",
@@ -1334,9 +1385,5 @@ PB_UTIL.ENABLED_PAPERCLIPS = {
   "blue_clip",
   "purple_clip",
   "pink_clip",
-  "platinum_clip"
-}
---- @alias Special_Paperclip  "platinum"
-PB_UTIL.SPECIAL_PAPERCLIPS = {
   "platinum_clip"
 }

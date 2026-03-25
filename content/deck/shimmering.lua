@@ -25,7 +25,7 @@ if PB_UTIL.config.ego_gifts_enabled then
     end,
     check_for_unlock = function(self, args)
       if args.type == 'paperback_sold_ego_gifts' then
-        return #G.GAME.paperback.sold_ego_gifts >= 10
+        return G.PROFILES[G.SETTINGS.profile].paperback_sold_ego_gifts >= 10
       end
     end,
     -- Utility function to recalculate consumable slot bonus

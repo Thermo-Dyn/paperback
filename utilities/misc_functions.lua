@@ -43,8 +43,8 @@ end
 ---@param str string
 ---@return boolean
 function PB_UTIL.is_paperclip(str)
-  for _, v in ipairs(PB_UTIL.ENABLED_PAPERCLIPS) do
-    if 'paperback_' .. v == str then
+  for _, v in ipairs(PB_UTIL.Paperclips) do
+    if v == str then
       return true
     end
   end
@@ -100,10 +100,8 @@ end
 ---Applies a paperclip with provided type to the provided card.
 ---A playing card can only have a single paperclip.
 ---@param card table
----@param type Paperclip
-function PB_UTIL.set_paperclip(card, type)
-  local key = 'paperback_' .. type .. '_clip'
-
+---@param key string
+function PB_UTIL.set_paperclip(card, key)
   if card and PB_UTIL.is_paperclip(key) then
     PB_UTIL.remove_paperclip(card)
     SMODS.Stickers[key]:apply(card, true)
@@ -112,23 +110,20 @@ end
 
 ---Fetches a random paperclip type using a given seed
 ---@param seed string
----@param include_special boolean? if True, special clips such as Platinum Clips are allowed be polled (look at PB_UTIL.SPECIAL_PAPERCLIPS)
+---@param include_special boolean? if true, special clips such as Platinum Clips are allowed be polled
+---@return string
 function PB_UTIL.poll_paperclip(seed, include_special)
-  local clip = pseudorandom_element(PB_UTIL.ENABLED_PAPERCLIPS, pseudoseed(seed))
+  local clip = pseudorandom_element(PB_UTIL.Paperclips, pseudoseed(seed))
   while not include_special and PB_UTIL.is_special_clip(clip) do
-    clip = pseudorandom_element(PB_UTIL.ENABLED_PAPERCLIPS, pseudoseed(seed))
+    clip = pseudorandom_element(PB_UTIL.Paperclips, pseudoseed(seed))
   end
-  clip = string.sub(clip, 1, #clip - 5)
   return clip
 end
 
 ---Checks if a clip is a Special Paperclip
 ---@param clip string
 function PB_UTIL.is_special_clip(clip)
-  for k, v in ipairs(PB_UTIL.SPECIAL_PAPERCLIPS) do
-    if v == clip then return true end
-  end
-  return false
+  return PB_UTIL.is_paperclip(clip) and SMODS.Stickers[clip].special
 end
 
 ---Checks if a provided card is classified as a "Food Joker"
@@ -1350,50 +1345,53 @@ function PB_UTIL.banned_challenge_centers(list)
   end
 end
 
---- Logic for the Suit Drink Jokers
---- @param check (boolean) whether to only check for the suit presence
+--- Calculate function for the Suit Drink Jokers
+--- @param self (SMODS.Center)
 --- @param card (Card)
 --- @param context (CalcContext)
-function PB_UTIL.suit_drink_logic(card, context, check)
-  local has_suit = false
-  -- Check if played hand contains the required suit
-  for _, v in ipairs(context.scoring_hand) do
-    if v:is_suit(card.ability.extra.suit) then
-      has_suit = true
-      card.ability.extra.risk = false
-      break
+function PB_UTIL.suit_drink_calculate(self, card, context)
+  if context.individual and context.cardarea == G.play then
+    if context.other_card:is_suit(card.ability.extra.suit) then
+      if card.ability.extra.remaining > 0 then
+        context.other_card.ability[card.ability.extra.upgrade] =
+            (context.other_card.ability[card.ability.extra.upgrade] or 1) + card.ability.extra.amount
+
+        if not context.blueprint then
+          card.ability.extra.remaining = card.ability.extra.remaining - 1
+        end
+
+        return {
+          message = localize('k_upgrade_ex'),
+          colour = G.C.SUITS[card.ability.extra.suit],
+        }
+      end
     end
   end
 
-  if check then
-    return not has_suit
-  end
+  if context.after and not context.blueprint and card.ability.extra.remaining == 0 then
+    PB_UTIL.destroy_joker(card)
 
-  if not has_suit then
-    -- If the function is only checking for the suit presence, return here
-
-    -- Check if card is already at risk of being consumed, otherwise put it at risk
-    if not card.ability.extra.risk then
-      card.ability.extra.risk = true
-      juice_card_until(
-        card,
-        function() return card.ability.extra.risk and not G.RESET_JIGGLES end,
-        true
-      )
-      return {
-        message = localize('paperback_tipsy_ex'),
-        colour = G.C.SUITS[card.ability.extra.suit],
-        card = card
-      }
-    else
-      PB_UTIL.destroy_joker(card)
-      return {
-        message = localize('paperback_consumed_ex'),
-        colour = G.C.SUITS[card.ability.extra.suit],
-        card = card
-      }
-    end
+    return {
+      message = localize('paperback_consumed_ex'),
+      colour = G.C.RED,
+      message_card = card
+    }
   end
+end
+
+--- Loc Vars function for the Suit Drink Jokers
+--- @param self (SMODS.Center)
+--- @param card (Card)
+--- @param context (CalcContext)
+function PB_UTIL.suit_drink_loc_vars(self, info_queue, card)
+  return {
+    vars = {
+      card.ability.extra.remaining,
+      localize(card.ability.extra.suit, 'suits_plural'),
+      card.ability.extra.amount,
+      colours = { G.C.SUITS[card.ability.extra.suit] }
+    },
+  }
 end
 
 --- Count the number of entries in a table not in a sequence

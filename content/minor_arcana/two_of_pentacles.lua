@@ -30,17 +30,13 @@ PB_UTIL.MinorArcana {
     end
   end,
 
-  keep_on_use = function(self, card)
-    return G.jokers.highlighted[1].config.center.paperback and G.jokers.highlighted[1].config.center.paperback.permanently_eternal
-  end,
-
   use = function(self, card)
     local joker = G.jokers.highlighted[1]
 
     if joker.config.center.paperback and joker.config.center.paperback.permanently_eternal then
-      G.P_CENTERS[card.config.center.key].shatters = true
+      self.shatters = true
       SMODS.destroy_cards(card)
-      G.P_CENTERS[card.config.center.key].shatters = false
+      self.shatters = false
     else
       PB_UTIL.use_consumable_animation(card, joker, function()
         if joker.ability.eternal then

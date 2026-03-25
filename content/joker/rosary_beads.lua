@@ -22,16 +22,24 @@ SMODS.Joker {
   },
 
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.hearts, card.ability.extra.dollars, localize(card.ability.extra.suit, 'suits_plural') } }
+    return {
+      vars = {
+        card.ability.extra.hearts,
+        card.ability.extra.dollars,
+        localize(card.ability.extra.suit, 'suits_plural')
+      }
+    }
   end,
+
   calculate = function(self, card, context)
     if context.joker_main then
       local hearts = 0
-      for _, v in ipairs(G.play.cards) do
+      for _, v in ipairs(context.scoring_hand) do
         if v:is_suit(card.ability.extra.suit, false, true) then
           hearts = hearts + 1
         end
       end
+
       if hearts >= card.ability.extra.hearts then
         return { dollars = card.ability.extra.dollars }
       end
