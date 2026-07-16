@@ -40,6 +40,7 @@ function Game.init_game_object(self)
     max_consumeables = 0,
     jester_destroying_cards = false,
     coin_collection_adding_money = false,
+    food_jokers_purchased = 0,
 
     permabonus_odds = 0,
 
@@ -270,6 +271,23 @@ function add_tag(tag)
   }
 
   return add_tag_ref(tag)
+end
+
+-- New context for when the deck is "modified" (basically the modify_deck check for unlock)
+local set_ability_ref = Card.set_ability
+function Card.set_ability(self, center, initial, delay_sprites)
+  local ret = set_ability_ref(self, center, initial, delay_sprites)
+
+  if not initial and self.playing_card then
+    SMODS.calculate_context {
+      paperback = {
+        deck_modified = true,
+        card = self
+      }
+    }
+  end
+
+  return ret
 end
 
 -- Apostle-high straight flushes get renamed to "Rapture"

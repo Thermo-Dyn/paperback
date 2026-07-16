@@ -161,6 +161,14 @@ SMODS.Atlas {
   py = 95
 }
 
+-- Tickets to Ride atlas
+SMODS.Atlas {
+  key = 'tickets_atlas',
+  path = "Tickets.png",
+  px = 71,
+  py = 95
+}
+
 -- Registers the mod icon
 SMODS.Atlas { -- modicon
   key = 'modicon',

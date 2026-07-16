@@ -1434,3 +1434,22 @@ function PB_UTIL.refresh_shop_cost()
     end
   }))
 end
+
+--- Saves a value to the current profile, this will persist when the game is closed
+---@param key string
+---@param value any
+function PB_UTIL.save_profile_value(key, value)
+  local profile = G.PROFILES[G.SETTINGS.profile]
+  profile.paperback = profile.paperback or {}
+  profile.paperback[key] = value
+  G:save_progress()
+end
+
+--- Get a value from the current profile
+---@param key string
+---@param default any
+function PB_UTIL.get_profile_value(key, default)
+  local profile = G.PROFILES[G.SETTINGS.profile]
+  profile.paperback = profile.paperback or {}
+  return profile.paperback[key] or default
+end
