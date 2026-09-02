@@ -8,7 +8,7 @@ SMODS.Joker {
   attributes = {
     "mult", "scaling", "sell_value", "clubs", "suit"
   },
-  rarity = 1,
+  rarity = 2,
   unlocked = false,
   pos = { x = 3, y = 13 },
   atlas = "jokers_atlas",

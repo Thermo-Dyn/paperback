@@ -3256,6 +3256,18 @@ return {
           "of sell value"
         }
       },
+      j_paperback_one_with_nothing = {
+        name = "One With Nothing",
+        text = {
+          "After playing a hand,",
+          "{C:attention}discard{} all cards in hand",
+        },
+        unlock = {
+          "Have a card with",
+          "{C:money,E:1}$#1#{} or more",
+          "of sell value"
+        }
+      },
       j_paperback_banana_man = {
         name = "Banana Man",
         text = {
