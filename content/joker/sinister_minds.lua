@@ -5,6 +5,7 @@ SMODS.Joker {
       retriggers = 1,
       a_retriggers = 1,
       required_spectrals = 1,
+      required_spectrals_inc = 1,
       hand = 'Pair',
       spectrals_left = 1
     }
@@ -49,7 +50,8 @@ SMODS.Joker {
         localize('k_spectral'),
         card.ability.extra.required_spectrals == 1 and "" or "s",
         localize(card.ability.extra.hand, 'poker_hands'),
-        card.ability.extra.spectrals_left
+        card.ability.extra.spectrals_left,
+        card.ability.extra.required_spectrals_inc,
       }
     }
   end,
@@ -79,7 +81,7 @@ SMODS.Joker {
         SMODS.scale_card(card, {
           ref_table = card.ability.extra,
           ref_value = 'required_spectrals',
-          scalar_value = 'a_retriggers',
+          scalar_value = 'required_spectrals_inc',
           no_message = true
         })
         card.ability.extra.spectrals_left = card.ability.extra.required_spectrals

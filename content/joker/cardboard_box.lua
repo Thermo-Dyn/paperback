@@ -31,7 +31,7 @@ SMODS.Joker {
     return {
       vars = {
         localize { type = 'name_text', set = 'Stake', key = 'stake_purple' },
-        colours = { get_stake_col(6) }
+        colours = { get_stake_col(6) },
       }
     }
     end,
@@ -42,7 +42,9 @@ SMODS.Joker {
   loc_vars = function(self, info_queue, card)
     return {
       vars = {
-        card.ability.extra.sell_value, card.ability.extra.a_sell_value
+        card.ability.extra.sell_value,
+        card.ability.extra.a_sell_value,
+        localize(card.ability.extra.rank, 'ranks'),
       }
     }
   end,

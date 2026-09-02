@@ -52,7 +52,8 @@ SMODS.Joker {
         localize(card.ability.extra.suit, 'suits_plural'),
         card.ability.extra.a_x_mult,
         localize(card.ability.extra.destroy_suit, 'suits_singular'),
-        localize(card.ability.extra.destroy_suit, 'suits_plural')
+        localize(card.ability.extra.destroy_suit, 'suits_plural'),
+        localize(card.ability.extra.suit, 'suits_singular'),
       }
     }
   end,

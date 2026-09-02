@@ -37,7 +37,7 @@ SMODS.Joker {
     return {
       vars = {
         PB_UTIL.force_signed(card.ability.extra.chips),
-        PB_UTIL.force_signed(card.ability.extra.rate)
+        PB_UTIL.force_signed(-card.ability.extra.rate)
       }
     }
   end,
