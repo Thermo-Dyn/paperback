@@ -3263,9 +3263,8 @@ return {
           "{C:attention}discard{} all cards in hand",
         },
         unlock = {
-          "Have a card with",
-          "{C:money,E:1}$#1#{} or more",
-          "of sell value"
+          "Run out of cards",
+          "in full deck"
         }
       },
       j_paperback_banana_man = {

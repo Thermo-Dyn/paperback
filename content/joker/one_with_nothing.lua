@@ -9,7 +9,8 @@ SMODS.Joker {
     "discard"
   },
   rarity = 2,
-  pos = { x = 0, y = 0 },
+  unlocked = false,
+  pos = { x = 11, y = 13 },
   atlas = "jokers_atlas",
   cost = 5,
   blueprint_compat = false,
@@ -21,6 +22,10 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'dowfrin' }
   },
+
+  check_for_unlock = function(self, args)
+    return G.GAME.round >= 1 and G.playing_cards and #G.playing_cards <= 0
+  end,
 
   calculate = function(self, card, context)
     if context.press_play then
