@@ -203,6 +203,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "trans_flag",
   "pride_flag",
   "bismuth",
+  "scorecard",
   "cherry_blossoms",
   "hole_in_one",
   "blue_bonnets",

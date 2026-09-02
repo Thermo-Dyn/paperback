@@ -1211,6 +1211,18 @@ return {
           "{C:paperback_crowns,E:1}Shiny {C:paperback_stars,E:1}Suit{}"
         }
       },
+      j_paperback_scorecard = {
+        name = "Scorecard",
+        text = {
+          "Every {C:attention}#1# {C:inactive}[#2#]{} discarded {V:1}#3#{},",
+          "this Joker gains another's",
+          "sell value as {C:mult}+Mult{}",
+          "{C:inactive}(Currently {C:mult}+#4#{C:inactive} Mult)",
+        },
+        unlock = {
+          "Beat Ante 9"
+        }
+      },
       j_paperback_deadringer = {
         name = "Deadringer",
         text = {
