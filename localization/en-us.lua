@@ -3457,8 +3457,8 @@ return {
       j_paperback_coin_collection = {
         name = "Coin Collection",
         text = {
-          "Any time you earn {C:money}money{}",
-          "Earn an additional {C:money}$#1#"
+          "Any time you earn {C:money}money{},",
+          "earn an additional {C:money}$#1#"
         },
         unlock = {
           "Have {E:1,C:money}$#1#",
