@@ -365,7 +365,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "pedrillo",
   "nichola",
   "chaplin",
-  -- "shinzaemon",
+  "shinzaemon",
 }
 
 PB_UTIL.ENABLED_SPECTRALS = {

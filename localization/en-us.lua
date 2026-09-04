@@ -4001,6 +4001,18 @@ return {
           "{C:inactive}(Currently {C:chips}+#2#{C:inactive} Chips){}"
         }
       },
+      j_paperback_shinzaemon = {
+        name = "Shinzaemon",
+        text = {
+          "If scored hand",
+          "contains {C:attention}#1#{} cards",
+          "the {C:attention}#1#th{} card",
+          "permanently gains {X:mult,C:white}X#2#{} Mult"
+        },
+        unlock = {
+          "{E:1,s:1.3}?????",
+        }
+      },
       -- Cross-Mod jokers start here
       j_paperback_moon_waltz = {
         name = "Moon Waltz",
