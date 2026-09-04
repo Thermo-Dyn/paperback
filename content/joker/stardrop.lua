@@ -58,8 +58,11 @@ if PB_UTIL.should_load_spectrum_items() then
     calculate = function(self, card, context)
       if context.individual and context.cardarea == G.play then
         if context.other_card:is_suit('paperback_Stars') then
-          PB_UTIL.apply_plasma_effect(context.other_card, false, card.ability.extra.balance / 100)
-          return nil, true
+          return {
+            func = function()
+              PB_UTIL.apply_plasma_effect(context.other_card, false, card.ability.extra.balance / 100)
+            end
+          }
         end
       end
     end
