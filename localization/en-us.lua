@@ -4013,6 +4013,18 @@ return {
           "{E:1,s:1.3}?????",
         }
       },
+      j_paperback_stardrop = {
+        name = "Stardrop",
+        text = {
+          "Scored {V:1}#2#{}",
+          "{C:purple}Balance{} {C:attention}#1#%{} of",
+          "{C:chips}Chips{} and {C:mult}Mult"
+        },
+        unlock = {
+          "Have a deck consisting of",
+          "only {C:paperback_stars,E:1}Stars{}"
+        }
+      },
       -- Cross-Mod jokers start here
       j_paperback_moon_waltz = {
         name = "Moon Waltz",
