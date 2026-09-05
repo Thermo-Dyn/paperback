@@ -12,7 +12,7 @@ SMODS.Joker {
     'economy'
   },
   rarity = 1,
-  pos = { x = 0, y = 0.5 },
+  pos = { x = 15, y = 13 },
   atlas = "jokers_atlas",
   cost = 6,
   blueprint_compat = true,
