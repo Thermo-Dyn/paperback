@@ -276,6 +276,7 @@ PB_UTIL.ENABLED_JOKERS = {
   -- "tower_of_balatro",
   "jimbos_inferno",
   "malibu",
+  "grimoire",
   "tome",
   "journal",
   "park_postcard",

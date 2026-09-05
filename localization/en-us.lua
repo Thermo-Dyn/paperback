@@ -4048,6 +4048,14 @@ return {
           "All of the same suit"
         }
       },
+      j_paperback_grimoire = {
+        name = "Grimoire",
+        text = {
+          "{C:money}Shops{} after the {C:attention}Big Blind",
+          "start with an additional",
+          "{C:paperback_ego_gift}E.G.O Gift Extraction Pack{}"
+        }
+      },
       -- Cross-Mod jokers start here
       j_paperback_moon_waltz = {
         name = "Moon Waltz",
