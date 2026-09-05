@@ -4025,6 +4025,17 @@ return {
           "only {C:paperback_stars,E:1}Stars{}"
         }
       },
+      j_paperback_moneyback = {
+        name = "Moneyback",
+        text = {
+          "Every {C:money}$#1#{C:inactive} [#2#]{} spent",
+          "earns {C:money}$#3#{}"
+        },
+        unlock = {
+          "Spend {C:money}$#1#",
+          "In a shop"
+        }
+      },
       -- Cross-Mod jokers start here
       j_paperback_moon_waltz = {
         name = "Moon Waltz",

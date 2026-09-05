@@ -180,6 +180,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "jester_of_nihil",
   "shopkeep",
   "membership_card",
+  "moneyback",
   "wild_prize",
   "deadringer",
   "penumbra_phantasm",
