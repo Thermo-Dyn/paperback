@@ -18,6 +18,7 @@ SMODS.Joker {
   blueprint_compat = true,
   eternal_compat = true,
   perishable_compat = true,
+  unlocked = false,
   paperback_credit = {
     coder = { 'thermo' }
   },
@@ -30,6 +31,12 @@ SMODS.Joker {
         card.ability.extra.money
       }
     }
+  end,
+
+  check_for_unlock = function(self, args)
+    if args.type == 'spend_in_one_shop' and to_number(args.spent) >= 100 then
+      unlock_card(self)
+    end
   end,
 
   calculate = function(self, card, context)

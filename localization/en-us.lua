@@ -4032,7 +4032,7 @@ return {
           "earns {C:money}$#3#{}"
         },
         unlock = {
-          "Spend {C:money}$#1#",
+          "Spend {C:money}$100",
           "In a shop"
         }
       },
