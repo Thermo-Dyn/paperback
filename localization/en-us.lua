@@ -4036,6 +4036,18 @@ return {
           "In a shop"
         }
       },
+      j_paperback_nazca_lines = {
+        name = "Nazca Lines",
+        text = {
+          "Scored cards earn {C:money}$#1#",
+          "for {C:attention}each{} adjacent",
+          "{C:attention}debuffed{} or {C:attention}unscored{} card"
+        },
+        unlock = {
+          "Play a Four of a Kind",
+          "All of the same suit"
+        }
+      },
       -- Cross-Mod jokers start here
       j_paperback_moon_waltz = {
         name = "Moon Waltz",

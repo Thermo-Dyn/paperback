@@ -214,6 +214,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "river",
   "evergreens",
   "56_leaf_clover",
+  "nazca_lines",
   "master_plan",
   "the_wonder_of_you",
   "tian_tian",
