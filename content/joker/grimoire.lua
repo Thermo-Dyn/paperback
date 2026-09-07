@@ -25,8 +25,8 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'thermo' }
   },
-  loc_vars = function(self, infoqueue, card)
-    infoqueue[#infoqueue + 1] = G.P_CENTERS[card.ability.extra.booster]
+  loc_vars = function(self, info_queue, card)
+    info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.booster]
   end,
   calculate = function(self, card, context)
     if context.starting_shop and G.GAME.blind:get_type() == "Big" then
