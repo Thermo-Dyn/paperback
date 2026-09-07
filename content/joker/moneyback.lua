@@ -34,7 +34,7 @@ SMODS.Joker {
   end,
 
   check_for_unlock = function(self, args)
-    if args.type == 'spend_in_one_shop' and to_number(args.spent) >= 100 then
+    if args.type == 'spend_in_one_shop' and args.spent >= 100 then
       unlock_card(self)
     end
   end,
