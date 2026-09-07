@@ -36,16 +36,14 @@ SMODS.Joker {
   end,
 
   calculate = function(self, card, context)
-    if context.before and context.main_eval and #context.scoring_hand >= 5 then
-      context.scoring_hand[card.ability.extra.card_count].
-      ability[card.ability.extra.upgrade] = (
-        context.scoring_hand[card.ability.extra.card_count].
-        ability[card.ability.extra.upgrade] or 1
-      ) + card.ability.extra.a_xmult
+    if context.before and context.main_eval and #context.scoring_hand >= card.ability.extra.card_count then
+      local upgrade_card = context.scoring_hand[card.ability.extra.card_count]
+      upgrade_card.ability[card.ability.extra.upgrade] = (upgrade_card.ability[card.ability.extra.upgrade] or 1) +
+          card.ability.extra.a_xmult
       return {
         message = localize('k_upgrade_ex'),
         colour = G.C.RED,
-        message_card = context.scoring_hand[card.ability.extra.card_count]
+        message_card = upgrade_card
       }
     end
   end

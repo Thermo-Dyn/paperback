@@ -36,7 +36,6 @@ if PB_UTIL.should_load_spectrum_items() then
           colours = {
             G.C.PAPERBACK_STARS_LC
           }
-
         }
       }
     end,

@@ -47,10 +47,6 @@ PB_UTIL.EGO_Gift {
         return
       end
 
-      for _, c in ipairs(cards) do
-        print(c:get_id())
-      end
-
       local card_to_upgrade = pseudorandom_element(cards, "red_tassel")
       card_to_upgrade.ability.perma_mult = (card_to_upgrade.ability.perma_mult or 0) + card.ability.mult_mod
 

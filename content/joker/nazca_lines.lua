@@ -37,17 +37,9 @@ SMODS.Joker {
   end,
 
   check_for_money = function(context, index)
-    local unscored = false
-    for _, c in ipairs(context.scoring_hand) do
-      if c ~= context.full_hand[index] then
-        unscored = true
-      else
-        unscored = false
-        break
-      end
-    end
+    local card = context.full_hand[index]
 
-    if context.full_hand[index].debuff or unscored then
+    if context.full_hand[index].debuff or not SMODS.in_scoring(card, context.scoring_hand) then
       return 1
     end
     return 0

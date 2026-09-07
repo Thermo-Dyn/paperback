@@ -1,5 +1,10 @@
 SMODS.Joker {
   key = "grimoire",
+  config = {
+    extra = {
+      booster = 'p_paperback_ego_gift_normal_1'
+    }
+  },
   attributes = {
     'ego_gift',
     'consumable',
@@ -20,8 +25,9 @@ SMODS.Joker {
   paperback_credit = {
     coder = { 'thermo' }
   },
-
-
+  loc_vars = function(self, infoqueue, card)
+    infoqueue[#infoqueue + 1] = G.P_CENTERS[card.ability.extra.booster]
+  end,
   calculate = function(self, card, context)
     if context.starting_shop and G.GAME.blind:get_type() == "Big" then
       G.E_MANAGER:add_event(Event {
