@@ -33,9 +33,10 @@ SMODS.Joker {
       G.E_MANAGER:add_event(Event {
         func = function()
           SMODS.add_booster_to_shop(card.ability.extra.booster)
-          return nil, true
+          return true
         end
       })
+      return nil, true
     end
   end
 }
