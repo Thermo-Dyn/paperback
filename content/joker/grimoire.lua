@@ -32,9 +32,8 @@ SMODS.Joker {
     if context.starting_shop and G.GAME.blind:get_type() == "Big" then
       G.E_MANAGER:add_event(Event {
         func = function()
-          local key = 'p_paperback_ego_gift_normal_1'
-          local booster = SMODS.add_booster_to_shop(key)
-          return true
+          SMODS.add_booster_to_shop(card.ability.extra.booster)
+          return nil, true
         end
       })
     end
