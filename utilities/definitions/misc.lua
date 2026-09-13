@@ -403,7 +403,7 @@ PB_UTIL.ENABLED_BLINDS = {
   -- "scarlet_score",
 
   "alphabet",
-  -- "bellcurve",
+  "bellcurve",
   -- "claw",
   -- "door",
   -- "electric",

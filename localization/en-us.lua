@@ -186,6 +186,13 @@ return {
           "are debuffed",
           "{s:0.8}(Ace, King, Queen, Jack)"
         }
+      },
+      bl_paperback_bellcurve = {
+        name = "The Bellcurve",
+        text = {
+          "Excess Score this Ante",
+          "is added to this Blind"
+        }
       }
     },
     Joker = {
