@@ -397,12 +397,12 @@ PB_UTIL.ENABLED_BLINDS = {
   "glissando",
   -- "denim_da_capo",
   "misty_bass",
-  "taupe_treble"
+  "taupe_treble",
   -- "black_silence",
   -- "pearlescent_orchestra",
   -- "scarlet_score",
 
-  -- "alphabet",
+  "alphabet",
   -- "bellcurve",
   -- "claw",
   -- "door",

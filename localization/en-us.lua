@@ -178,6 +178,15 @@ return {
           'are debuffed'
         }
       },
+
+      bl_paperback_alphabet = {
+        name = "The Alphabet",
+        text = {
+          "Lettered Cards",
+          "are debuffed",
+          "{s:0.8}(Ace, King, Queen, Jack)"
+        }
+      }
     },
     Joker = {
       j_paperback_showdown = {
