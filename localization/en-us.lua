@@ -193,6 +193,13 @@ return {
           "Excess Score this Ante",
           "is added to this Blind"
         }
+      },
+      bl_paperback_claw = {
+        name = "The Claw",
+        text = {
+          "All odd ranks",
+          "are debuffed"
+        }
       }
     },
     Joker = {

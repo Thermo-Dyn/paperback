@@ -404,7 +404,7 @@ PB_UTIL.ENABLED_BLINDS = {
 
   "alphabet",
   "bellcurve",
-  -- "claw",
+  "claw",
   -- "door",
   -- "electric",
   -- "finger",
