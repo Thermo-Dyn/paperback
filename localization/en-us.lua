@@ -207,6 +207,13 @@ return {
           "Played hand must contain",
           "the first played poker hand"
         }
+      },
+      bl_paperback_electric = {
+        name = "The Electric",
+        text = {
+          "Played hand must contain",
+          "an Enhanced card"
+        }
       }
     },
     Joker = {
@@ -5829,6 +5836,7 @@ return {
       paperback_fall_ex = "Fall!",
       paperback_prevented_ex = "Prevented!",
       paperback_swoon_ex = "SWOON",
+      paperback_electric_debuff = "Must contain an Enhanced card",
 
       paperback_ui_requires_restart = "Requires Restart",
       paperback_ui_no_requires_restart = "Doesn't Require Restart",
