@@ -200,6 +200,13 @@ return {
           "All odd ranks",
           "are debuffed"
         }
+      },
+      bl_paperback_door = {
+        name = "The Door",
+        text = {
+          "Played hand must contain",
+          "the first played poker hand"
+        }
       }
     },
     Joker = {
@@ -5952,6 +5959,8 @@ return {
       paperback_a_plus_consumable_slot = "+#1# Consumable Slots",
       paperback_a_minus_consumable_slot = "-#1# Consumable Slots",
       paperback_a_ante = "#1# Ante",
+
+      paperback_door_debuff = "Must contain a #1#",
     },
     ranks = {
       paperback_Apostle = 'Apostle',
