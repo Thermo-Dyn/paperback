@@ -130,7 +130,7 @@ if PB_UTIL.config.tickets_enabled then
 
     -- Set the right sprite when created or loaded
     set_sprites = function(self, card, front)
-      if card.ability and card.ability.extra.ticket and card.ability.extra.ticket.stage then
+      if card.ability and card.ability.extra and card.ability.extra.ticket and card.ability.extra.ticket.stage then
         local stage = card.ability.extra.ticket.stage
         if stage > 0 then
           card.children.center:set_sprite_pos(self.stages[stage])

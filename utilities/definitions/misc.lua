@@ -154,6 +154,7 @@ PB_UTIL.ENABLED_JOKERS = {
   "torii",
   "shugi_bukuro",
   "hotel_guest",
+  "conductor",
   "freight",
   "one_with_nothing",
   "high_speed_rail",

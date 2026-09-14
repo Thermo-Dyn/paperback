@@ -3276,6 +3276,18 @@ return {
           "{C:attention,E:1}Steel Queen{}",
         },
       },
+      j_paperback_conductor = {
+        name = "Conductor",
+        text = {
+          "Gains {C:mult}+#1#{} Mult for",
+          "each held {C:paperback_ticket}Ticket{}",
+          "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult){}",
+        },
+        unlock = {
+          "Complete a",
+          "{C:paperback_ticket}Ticket{}",
+        },
+      },
       j_paperback_freight = {
         name = "Freight",
         text = {
