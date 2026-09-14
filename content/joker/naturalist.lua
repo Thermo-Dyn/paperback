@@ -28,9 +28,9 @@ SMODS.Joker {
   },
 
   in_pool = function(self, args)
-    if G.consumeables.cards then
+    if G.consumeables then
       for _, v in ipairs(G.consumeables.cards) do
-        if v.ability.set == 'paperback_ticket' then
+        if v.ability.set == 'paperback_ticket_to_ride' then
           return true
         end
       end
@@ -40,10 +40,10 @@ SMODS.Joker {
 
   check_for_unlock = function(self, args)
     if args.type == 'discover_amount' then
-      if G.P_CENTER_POOLS["paperback_ticket"] then
+      if G.P_CENTER_POOLS["paperback_ticket_to_ride"] then
         local count = 0
         local count2 = 0
-        for k, v in pairs(G.P_CENTER_POOLS["paperback_ticket"]) do
+        for k, v in pairs(G.P_CENTER_POOLS["paperback_ticket_to_ride"]) do
           count2 = count2 + 1
           if v.discovered == true then
             count = count + 1
