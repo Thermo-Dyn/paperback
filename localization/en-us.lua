@@ -3288,6 +3288,17 @@ return {
           "{C:paperback_ticket}Ticket{}",
         },
       },
+      j_paperback_long_haul = {
+        name = "Long Haul",
+        text = {
+          "Gives {C:attention}#1# {C:paperback_minor_arcana}Divination Tags{}",
+          "when a {C:paperback_ticket}Ticket{} stage is completed",
+        },
+        unlock = {
+          "Complete a",
+          "{C:paperback_ticket}Ticket{}",
+        },
+      },
       j_paperback_freight = {
         name = "Freight",
         text = {

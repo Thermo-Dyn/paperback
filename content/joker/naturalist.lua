@@ -64,7 +64,7 @@ SMODS.Joker {
   end,
 
   calculate = function(self, card, context)
-    if context.paperback and context.paperback.ticket_progress then
+    if not context.blueprint and context.paperback and context.paperback.ticket_progress then
       SMODS.scale_card(card, {
         ref_table = card.ability.extra,
         ref_value = 'xmult',
