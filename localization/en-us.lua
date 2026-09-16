@@ -87,6 +87,18 @@ return {
           "{C:paperback_ego_gift}E.G.O Gifts{}"
         },
       },
+      b_paperback_commander = {
+        name = "Commander's Deck",
+	text = {
+          "The {C:attention}leftmost Joker{}",
+	  "triggers {C:attention}twice{} if possible",
+	  "Jokers {C:attention}cannot{} be moved",
+	  "while in a {C:attention}blind"
+	},
+	unlock = {
+          "Have a deck of {C:attention}#1#{} or more cards"
+	}
+      }
     },
     Blind = {
       bl_paperback_quarter = {
