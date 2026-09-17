@@ -489,7 +489,8 @@ PB_UTIL.ENABLED_DECKS = {
   'antique',
   'passionate',
   'shimmering',
-  'commander'
+  'commander',
+  'potters',
 }
 
 PB_UTIL.ENABLED_CHALLENGES = {
